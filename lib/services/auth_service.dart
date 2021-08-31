@@ -2,8 +2,6 @@ part of 'services.dart';
 
 class AuthService {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  CollectionReference _userReference =
-      FirebaseFirestore.instance.collection('users');
 
   Future<UserModel> signUp({
     required String name,

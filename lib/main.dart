@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mechaku_blocs/cubit/auth_cubit.dart';
+import 'package:mechaku_blocs/cubit/page_cubit.dart';
 
 import '/routes/AppPages.dart';
 import '/routes/AppRoutes.dart';
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => AuthCubit()),
+        BlocProvider(create: (_) => PageCubit()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
