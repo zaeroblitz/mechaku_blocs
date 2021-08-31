@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "796668364923",
+    "project_id": "mechakublocs",
+    "storage_bucket": "mechakublocs.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:796668364923:android:2e33f30177c03a4383fade",
+        "android_client_info": {
+          "package_name": "com.zaeroblitz.mechaku_blocs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "796668364923-tpn0igollv60eb2lpc8jgph8kplp9lla.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPGP9vd26RrIvmKDBomETOxB20GEO8Edw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "796668364923-tpn0igollv60eb2lpc8jgph8kplp9lla.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
