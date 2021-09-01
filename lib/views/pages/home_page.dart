@@ -14,7 +14,7 @@ class Homepage extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
         decoration: BoxDecoration(
           color: blackColor1,
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(28),
         ),
         child: Row(
           children: [
@@ -134,7 +134,7 @@ class Homepage extends StatelessWidget {
               child: Text(
                 'Best Seller',
                 style: titleTextStyle.copyWith(
-                  fontSize: 24,
+                  fontSize: 22,
                 ),
               ),
             ),
@@ -173,7 +173,7 @@ class Homepage extends StatelessWidget {
                     child: Text(
                       'Categories',
                       style: titleTextStyle.copyWith(
-                        fontSize: 24,
+                        fontSize: 22,
                       ),
                     ),
                   ),

@@ -9,11 +9,12 @@ part 'category_state.dart';
 class CategoryCubit extends Cubit<CategoryState> {
   CategoryCubit() : super(CategoryInitial());
 
-  void getCategories() async {
+  void getCategories(int limit) async {
     try {
       emit(CategoryLoading());
 
-      List<CategoryModel> categories = await CategoryService().getCategories();
+      List<CategoryModel> categories =
+          await CategoryService().getCategories(limit);
 
       emit(CategorySuccess(categories));
     } on FirebaseException catch (e) {

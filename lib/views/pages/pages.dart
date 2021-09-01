@@ -18,6 +18,7 @@ import '../../cubit/auth_cubit.dart';
 import '../../cubit/page_cubit.dart';
 import '../../routes/AppRoutes.dart';
 import '../../shared/validator.dart';
+import '../../cubit/product_cubit.dart';
 import '../../cubit/category_cubit.dart';
 
 part 'main_page.dart';

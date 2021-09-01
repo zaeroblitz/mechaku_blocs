@@ -10,40 +10,61 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 288,
-      height: 80,
-      margin: EdgeInsets.only(
-        left: (index == 0) ? 20 : 0,
-        right: (index != itemCount) ? 20 : 0,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: NetworkImage(category.banner),
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        width: 288,
+        height: 80,
+        margin: EdgeInsets.only(
+          left: (index == 0) ? 20 : 0,
+          right: (index != itemCount) ? 16 : 0,
         ),
-      ),
-      child: Stack(
-        children: [
-          Container(
-            width: 288,
-            height: 80,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  blackColor2.withOpacity(0.9),
-                  blackColor2.withOpacity(0.25),
-                ],
-              ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Stack(
+          children: [
+            // Category Banner
+            CachedNetworkImage(
+              imageUrl: category.banner,
+              placeholder: (_, __) => ShimmerItem(width: 288, height: 80),
+              errorWidget: (context, url, error) => Container(),
+              imageBuilder: (context, imageProvider) {
+                return Stack(
+                  children: [
+                    Container(
+                      width: 288,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: imageProvider,
+                        ),
+                      ),
+                    ),
+                    // Category Gradient
+                    Container(
+                      width: 288,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            blackColor2.withOpacity(0.9),
+                            blackColor2.withOpacity(0.25),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
-          ),
-          Center(
-            child: GestureDetector(
-              onTap: () {},
+
+            Center(
               child: Row(
                 children: [
                   // Category Name
@@ -82,8 +103,8 @@ class CategoryItem extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

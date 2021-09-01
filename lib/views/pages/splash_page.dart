@@ -13,19 +13,28 @@ class _SplashPageState extends State<SplashPage> {
     Timer(
       Duration(seconds: 3),
       () {
-        User? user = FirebaseAuth.instance.currentUser;
-
-        if (user == null) {
-          Navigator.pushNamedAndRemoveUntil(
-              context, AppRoutes.sign_in_page, (route) => false);
-        } else {
-          context.read<AuthCubit>().getCurrentUser(user.uid);
-          context.read<CategoryCubit>().getCategories();
-          Navigator.pushNamedAndRemoveUntil(
-              context, AppRoutes.mainpage, (route) => false);
-        }
+        fetchData();
       },
     );
+  }
+
+  void fetchData() {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, AppRoutes.sign_in_page, (route) => false);
+    } else {
+      context.read<AuthCubit>().getCurrentUser(user.uid);
+      context.read<CategoryCubit>().getCategories(5);
+      context.read<ProductCubit>().getProducts();
+      context.read<ProductCubit>().getFlashSaleProducts();
+      context.read<ProductCubit>().getBestSellerProducts();
+      context.read<ProductCubit>().getNewArrivalProducts();
+
+      Navigator.pushNamedAndRemoveUntil(
+          context, AppRoutes.mainpage, (route) => false);
+    }
   }
 
   @override
