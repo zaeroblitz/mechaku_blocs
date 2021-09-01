@@ -13,7 +13,9 @@ class UserService {
         'balance': user.balance,
         'username': user.username,
         'wishlists': user.wishlists,
-        'profilePicture': user.profilePicture,
+        'profilePicture': user.profilePicture == ''
+            ? 'https://ui-avatars.com/api/?name=$user.name'
+            : user.profilePicture,
       });
     } catch (e) {
       throw e;

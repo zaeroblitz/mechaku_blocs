@@ -20,6 +20,7 @@ class _SplashPageState extends State<SplashPage> {
               context, AppRoutes.sign_in_page, (route) => false);
         } else {
           context.read<AuthCubit>().getCurrentUser(user.uid);
+          context.read<CategoryCubit>().getCategories();
           Navigator.pushNamedAndRemoveUntil(
               context, AppRoutes.mainpage, (route) => false);
         }

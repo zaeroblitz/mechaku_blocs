@@ -1,16 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:mechaku_blocs/cubit/auth_cubit.dart';
-import 'package:mechaku_blocs/cubit/page_cubit.dart';
 
+import '/shared/theme.dart';
 import '/routes/AppPages.dart';
 import '/routes/AppRoutes.dart';
+import '/cubit/auth_cubit.dart';
+import '/cubit/page_cubit.dart';
+import '/cubit/category_cubit.dart';
 
 Future<void> main() async {
+  _changeStatusBarColor() {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: blackColor1,
+      ),
+    );
+  }
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
+  _changeStatusBarColor();
   runApp(MyApp());
 }
 
@@ -21,6 +33,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => AuthCubit()),
         BlocProvider(create: (_) => PageCubit()),
+        BlocProvider(create: (_) => CategoryCubit()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

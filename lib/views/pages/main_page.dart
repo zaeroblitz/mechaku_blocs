@@ -48,8 +48,8 @@ class MainPage extends StatelessWidget {
         margin: EdgeInsets.all(16),
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(32),
+          color: Colors.white54,
+          borderRadius: BorderRadius.circular(50),
         ),
         child: SalomonBottomBar(
           items: _bottomNavItem,
