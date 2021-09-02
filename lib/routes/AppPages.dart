@@ -8,5 +8,6 @@ class AppPages {
     AppRoutes.splash_page: (context) => SplashPage(),
     AppRoutes.sign_in_page: (context) => SignInPage(),
     AppRoutes.sign_up_page: (context) => SignUpPage(),
+    AppRoutes.detail_product_page: (context) => ProductDetailPage(),
   };
 }

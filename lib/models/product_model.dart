@@ -8,6 +8,7 @@ class ProductModel extends Equatable {
   final String category;
   final String description;
   final List<String> gallery;
+  final int qty;
   final int price;
   final int priceFlashSale;
   final bool isFlashSale;
@@ -21,6 +22,7 @@ class ProductModel extends Equatable {
     required this.category,
     required this.description,
     required this.gallery,
+    required this.qty,
     required this.price,
     required this.priceFlashSale,
     required this.isFlashSale,
@@ -38,6 +40,7 @@ class ProductModel extends Equatable {
       category: json['category'],
       description: json['description'],
       gallery: gallery,
+      qty: json['qty'] as int,
       price: json['price'] as int,
       priceFlashSale: json['priceFlashSale'] as int,
       isFlashSale: json['isFlashSale'],
@@ -54,6 +57,7 @@ class ProductModel extends Equatable {
       'category': category,
       'description': description,
       'gallery': gallery,
+      'qty': qty,
       'price': price,
       'priceFlaseSale': priceFlashSale,
       'isFlashSale': isFlashSale,

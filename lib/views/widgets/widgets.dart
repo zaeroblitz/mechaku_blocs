@@ -6,6 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../shared/theme.dart';
 import '../../models/models.dart';
+import '../../routes/AppRoutes.dart';
 
 part 'shimmer_item.dart';
 part 'category_item.dart';

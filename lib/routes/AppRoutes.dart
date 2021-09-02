@@ -4,4 +4,5 @@ abstract class AppRoutes {
   static const String splash_page = '/splash-page';
   static const String sign_in_page = '/sign-in-page';
   static const String sign_up_page = '/sign-up-page';
+  static const String detail_product_page = '/detail-product-page';
 }

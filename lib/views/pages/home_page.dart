@@ -141,7 +141,7 @@ class _HomepageState extends State<Homepage> {
       int index = -1;
       return BlocBuilder<ProductBestSellerCubit, ProductBestSellerState>(
         builder: (context, state) {
-          if (state is AuthLoading) {
+          if (state is ProductBestSellerLoading) {
             return Center(
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
