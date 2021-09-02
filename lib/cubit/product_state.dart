@@ -20,24 +20,6 @@ class ProductSuccess extends ProductState {
   List<Object> get props => [products];
 }
 
-class ProductBestSeller extends ProductState {
-  final List<ProductModel> products;
-
-  ProductBestSeller(this.products);
-
-  @override
-  List<Object> get props => [products];
-}
-
-class ProductNewArrival extends ProductState {
-  final List<ProductModel> products;
-
-  ProductNewArrival(this.products);
-
-  @override
-  List<Object> get props => [products];
-}
-
 class ProductFlashSale extends ProductState {
   final List<ProductModel> products;
 

@@ -27,9 +27,9 @@ class _SplashPageState extends State<SplashPage> {
     } else {
       context.read<AuthCubit>().getCurrentUser(user.uid);
       context.read<CategoryCubit>().getCategories(5);
-      // context.read<ProductCubit>().getProducts();
-      context.read<ProductCubit>().getBestSellerProducts();
-      // context.read<ProductCubit>().getNewArrivalProducts();
+      context.read<ProductCubit>().getProducts();
+      context.read<ProductBestSellerCubit>().getBestSellerProducts();
+      context.read<ProductNewArrivalCubit>().getNewArrivalProducts();
 
       Navigator.pushNamedAndRemoveUntil(
           context, AppRoutes.mainpage, (route) => false);

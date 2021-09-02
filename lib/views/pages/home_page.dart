@@ -125,9 +125,9 @@ class Homepage extends StatelessWidget {
 
     Widget _bestSellerProducts() {
       int index = -1;
-      return BlocBuilder<ProductCubit, ProductState>(
+      return BlocBuilder<ProductBestSellerCubit, ProductBestSellerState>(
         builder: (context, state) {
-          if (state is ProductBestSeller) {
+          if (state is ProductBestSellerSuccesss) {
             return Container(
               margin: EdgeInsets.only(
                 bottom: 20,
@@ -232,9 +232,9 @@ class Homepage extends StatelessWidget {
 
     Widget _newArrivalProducts() {
       int index = -1;
-      return BlocBuilder<ProductCubit, ProductState>(
+      return BlocBuilder<ProductNewArrivalCubit, ProductNewArrivalState>(
         builder: (context, state) {
-          if (state is ProductNewArrival) {
+          if (state is ProductNewArrivalSuccess) {
             return Container(
               margin: EdgeInsets.only(
                 bottom: 20,
@@ -263,7 +263,7 @@ class Homepage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: state.products.map((product) {
                         index++;
-                        return BestSellerItem(
+                        return NewArrivalItem(
                           product: product,
                           index: index,
                           itemCount: state.products.length,
@@ -293,10 +293,8 @@ class Homepage extends StatelessWidget {
                 _searchField(),
                 _bestSellerProducts(),
                 _categoriesBannner(),
-                // _newArrivalProducts(),
-                SizedBox(
-                  height: 80,
-                ),
+                _newArrivalProducts(),
+                SizedBox(height: 80),
               ],
             ),
           );

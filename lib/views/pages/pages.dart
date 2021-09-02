@@ -20,6 +20,8 @@ import '../../routes/AppRoutes.dart';
 import '../../shared/validator.dart';
 import '../../cubit/product_cubit.dart';
 import '../../cubit/category_cubit.dart';
+import '../../cubit/product_best_seller_cubit.dart';
+import '../../cubit/product_new_arrival_cubit.dart';
 
 part 'main_page.dart';
 part 'home_page.dart';

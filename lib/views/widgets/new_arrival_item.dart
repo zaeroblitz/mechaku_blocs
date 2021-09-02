@@ -12,8 +12,9 @@ class NewArrivalItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-        left: (index == 0) ? 20 : 16,
-        right: (index == itemCount) ? 20 : 0,
+        left: 20,
+        right: 20,
+        bottom: 16,
       ),
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -22,8 +23,10 @@ class NewArrivalItem extends StatelessWidget {
       ),
       child: CachedNetworkImage(
           imageUrl: product.gallery[0],
-          placeholder: (_, __) =>
-              ShimmerItem(width: double.infinity, height: double.infinity),
+          placeholder: (_, __) => ShimmerItem(
+                width: MediaQuery.of(context).size.width - 40,
+                height: 140,
+              ),
           errorWidget: (context, url, error) => Container(),
           imageBuilder: (context, imageProvider) {
             return Row(
@@ -35,7 +38,10 @@ class NewArrivalItem extends StatelessWidget {
                   margin: EdgeInsets.only(right: 12),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
-                    image: DecorationImage(image: imageProvider),
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 Expanded(
@@ -48,7 +54,7 @@ class NewArrivalItem extends StatelessWidget {
                         child: Text(
                           product.category,
                           style: hintTextStyle.copyWith(
-                            fontSize: 12,
+                            fontSize: 14,
                             fontWeight: light,
                           ),
                         ),

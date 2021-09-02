@@ -22,20 +22,6 @@ class ProductCubit extends Cubit<ProductState> {
     }
   }
 
-  // Get Best Seller Products
-  void getBestSellerProducts() async {
-    try {
-      emit(ProductLoading());
-
-      List<ProductModel> products =
-          await ProductService().getBestSellerProducts();
-
-      emit(ProductBestSeller(products));
-    } catch (e) {
-      throw e;
-    }
-  }
-
   // Get Flash Sale Products
   void getFlashSaleProducts() async {
     try {
@@ -45,20 +31,6 @@ class ProductCubit extends Cubit<ProductState> {
           await ProductService().getFlashSaleProducts();
 
       emit(ProductFlashSale(products));
-    } catch (e) {
-      throw e;
-    }
-  }
-
-  // Get New Arrival Products
-  void getNewArrivalProducts() async {
-    try {
-      emit(ProductLoading());
-
-      List<ProductModel> products =
-          await ProductService().getNewArrivalProducts();
-
-      emit(ProductNewArrival(products));
     } catch (e) {
       throw e;
     }
