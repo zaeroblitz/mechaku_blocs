@@ -102,6 +102,7 @@ class SignUpPage extends StatelessWidget {
       return BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
+            context.read<PageCubit>().setPage(0);
             Navigator.pushNamedAndRemoveUntil(
                 context, AppRoutes.mainpage, (route) => false);
           } else if (state is AuthFailed) {
@@ -153,7 +154,7 @@ class SignUpPage extends StatelessWidget {
 
     Widget _signIn() {
       return Container(
-        margin: EdgeInsets.only(top: 100),
+        margin: EdgeInsets.only(top: 20),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -180,20 +181,18 @@ class SignUpPage extends StatelessWidget {
     }
 
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            margin: EdgeInsets.all(30),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _logo(),
-                _title(),
-                _form(),
-                _signUpButton(),
-                _signIn(),
-              ],
-            ),
+      body: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.all(30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _logo(),
+              _title(),
+              _form(),
+              _signUpButton(),
+              _signIn(),
+            ],
           ),
         ),
       ),

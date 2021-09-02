@@ -66,6 +66,7 @@ class SignInPage extends StatelessWidget {
       return BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
+            context.read<PageCubit>().setPage(0);
             Navigator.pushNamedAndRemoveUntil(
                 context, AppRoutes.mainpage, (route) => false);
           } else if (state is AuthFailed) {
@@ -130,51 +131,56 @@ class SignInPage extends StatelessWidget {
     }
 
     Widget _signUp() {
-      return Container(
-        margin: EdgeInsets.only(top: 100),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Don't have an account? ",
-              style: regularTextStyle.copyWith(fontSize: 12),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.sign_up_page);
-              },
-              child: Text(
-                'Sign Up',
-                style: orangeTextStyle.copyWith(
-                  fontSize: 12,
-                  color: orangeColor,
-                  fontWeight: semiBold,
-                ),
-                textAlign: TextAlign.center,
+      return Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Don't have an account? ",
+                style: regularTextStyle.copyWith(fontSize: 12),
               ),
-            ),
-          ],
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoutes.sign_up_page);
+                },
+                child: Text(
+                  'Sign Up',
+                  style: orangeTextStyle.copyWith(
+                    fontSize: 12,
+                    color: orangeColor,
+                    fontWeight: semiBold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
         ),
       );
     }
 
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            margin: EdgeInsets.all(30),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _logo(),
-                _title(),
-                _form(),
-                _signInButton(),
-                _signUp(),
-              ],
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        margin: EdgeInsets.all(30),
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _logo(),
+                  _title(),
+                  _form(),
+                  _signInButton(),
+                ],
+              ),
             ),
-          ),
+            _signUp(),
+          ],
         ),
       ),
     );

@@ -1,6 +1,20 @@
 part of 'pages.dart';
 
-class Homepage extends StatelessWidget {
+class Homepage extends StatefulWidget {
+  @override
+  _HomepageState createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<ProductCubit>().getProducts();
+    context.read<CategoryCubit>().getCategories(5);
+    context.read<ProductBestSellerCubit>().getBestSellerProducts();
+    context.read<ProductNewArrivalCubit>().getNewArrivalProducts();
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget _header(UserModel user) {
@@ -127,7 +141,18 @@ class Homepage extends StatelessWidget {
       int index = -1;
       return BlocBuilder<ProductBestSellerCubit, ProductBestSellerState>(
         builder: (context, state) {
-          if (state is ProductBestSellerSuccesss) {
+          if (state is AuthLoading) {
+            return Center(
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                child: SpinKitWave(
+                  size: 50,
+                  color: blackColor1,
+                  duration: Duration(seconds: 3),
+                ),
+              ),
+            );
+          } else if (state is ProductBestSellerSuccesss) {
             return Container(
               margin: EdgeInsets.only(
                 bottom: 20,
@@ -181,10 +206,13 @@ class Homepage extends StatelessWidget {
         builder: (context, state) {
           if (state is CategoryLoading) {
             return Center(
-              child: SpinKitWave(
-                size: 50,
-                color: blackColor2,
-                duration: Duration(seconds: 3),
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                child: SpinKitWave(
+                  size: 50,
+                  color: blackColor2,
+                  duration: Duration(seconds: 3),
+                ),
               ),
             );
           } else if (state is CategorySuccess) {
@@ -234,7 +262,18 @@ class Homepage extends StatelessWidget {
       int index = -1;
       return BlocBuilder<ProductNewArrivalCubit, ProductNewArrivalState>(
         builder: (context, state) {
-          if (state is ProductNewArrivalSuccess) {
+          if (state is ProductNewArrivalLoading) {
+            return Center(
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                child: SpinKitWave(
+                  size: 50,
+                  color: blackColor2,
+                  duration: Duration(seconds: 3),
+                ),
+              ),
+            );
+          } else if (state is ProductNewArrivalSuccess) {
             return Container(
               margin: EdgeInsets.only(
                 bottom: 20,

@@ -19,6 +19,7 @@ class AuthService {
         name: name,
         username: username,
         balance: 2000000,
+        profilePicture: 'https://ui-avatars.com/api/?name=$name',
       );
 
       await UserService().setUser(user);

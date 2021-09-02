@@ -17,14 +17,13 @@ class CategoryItem extends StatelessWidget {
         height: 80,
         margin: EdgeInsets.only(
           left: (index == 0) ? 20 : 16,
-          right: (index == itemCount) ? 20 : 0,
+          right: (index == itemCount - 1) ? 20 : 0,
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
         ),
         child: Stack(
           children: [
-            // Category Banner
             CachedNetworkImage(
               imageUrl: category.banner,
               placeholder: (_, __) => ShimmerItem(width: 288, height: 80),
@@ -32,6 +31,7 @@ class CategoryItem extends StatelessWidget {
               imageBuilder: (context, imageProvider) {
                 return Stack(
                   children: [
+                    // Category Banner
                     Container(
                       width: 288,
                       height: 80,
@@ -43,6 +43,7 @@ class CategoryItem extends StatelessWidget {
                         ),
                       ),
                     ),
+
                     // Category Gradient
                     Container(
                       width: 288,
@@ -63,7 +64,6 @@ class CategoryItem extends StatelessWidget {
                 );
               },
             ),
-
             Center(
               child: Row(
                 children: [

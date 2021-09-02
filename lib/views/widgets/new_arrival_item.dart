@@ -24,11 +24,9 @@ class NewArrivalItem extends StatelessWidget {
       child: CachedNetworkImage(
           imageUrl: product.gallery[0],
           placeholder: (_, __) => ShimmerItem(
-                width: MediaQuery.of(context).size.width - 40,
-                height: 140,
-              ),
-          errorWidget: (context, url, error) => Container(),
-          imageBuilder: (context, imageProvider) {
+              width: MediaQuery.of(context).size.width - 40, height: 140),
+          errorWidget: (_, __, ___) => Container(),
+          imageBuilder: (_, imageProvider) {
             return Row(
               children: [
                 // Product Image
