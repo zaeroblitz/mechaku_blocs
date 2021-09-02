@@ -30,7 +30,7 @@ class ProductCubit extends Cubit<ProductState> {
       List<ProductModel> products =
           await ProductService().getBestSellerProducts();
 
-      emit(ProductSuccess(products));
+      emit(ProductBestSeller(products));
     } catch (e) {
       throw e;
     }
@@ -44,7 +44,7 @@ class ProductCubit extends Cubit<ProductState> {
       List<ProductModel> products =
           await ProductService().getFlashSaleProducts();
 
-      emit(ProductSuccess(products));
+      emit(ProductFlashSale(products));
     } catch (e) {
       throw e;
     }
@@ -58,7 +58,7 @@ class ProductCubit extends Cubit<ProductState> {
       List<ProductModel> products =
           await ProductService().getNewArrivalProducts();
 
-      emit(ProductSuccess(products));
+      emit(ProductNewArrival(products));
     } catch (e) {
       throw e;
     }
@@ -72,7 +72,7 @@ class ProductCubit extends Cubit<ProductState> {
       List<ProductModel> products =
           await ProductService().getProductsByCategory(category);
 
-      emit(ProductSuccess(products));
+      emit(ProductByCategory(products));
     } catch (e) {
       throw e;
     }

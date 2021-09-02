@@ -16,8 +16,8 @@ class CategoryItem extends StatelessWidget {
         width: 288,
         height: 80,
         margin: EdgeInsets.only(
-          left: (index == 0) ? 20 : 0,
-          right: (index != itemCount) ? 16 : 0,
+          left: (index == 0) ? 20 : 16,
+          right: (index == itemCount) ? 20 : 0,
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),

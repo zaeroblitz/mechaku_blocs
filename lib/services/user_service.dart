@@ -14,7 +14,7 @@ class UserService {
         'username': user.username,
         'wishlists': user.wishlists,
         'profilePicture': user.profilePicture == ''
-            ? 'https://ui-avatars.com/api/?name=$user.name'
+            ? 'https://ui-avatars.com/api/?name=${user.name}'
             : user.profilePicture,
       });
     } catch (e) {

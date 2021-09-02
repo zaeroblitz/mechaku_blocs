@@ -22,10 +22,8 @@ class ProductService {
   // Get Best Seller Products
   Future<List<ProductModel>> getBestSellerProducts() async {
     try {
-      QuerySnapshot snapshot = await _productRef
-          .where('isBestSeller', isEqualTo: true)
-          .orderBy('name')
-          .get();
+      QuerySnapshot snapshot =
+          await _productRef.where('isBestSeller', isEqualTo: true).get();
 
       List<ProductModel> bestSellerProducts = snapshot.docs.map((doc) {
         return ProductModel.fromJson(doc.data() as Map<String, dynamic>);

@@ -6,9 +6,11 @@ const Color bgColor = Color(0xFFF0F0F0);
 const Color pinkColor = Color(0xFFF6577C);
 const Color greyColor = Color(0xFFAAAAAA);
 const Color whiteColor = Color(0xFFF1F0F2);
+const Color whiteColor2 = Color(0xFFFEFEFE);
 const Color blackColor1 = Color(0xFF414141);
 const Color blackColor2 = Color(0xFF333333);
 const Color orangeColor = Color(0xFFFFA500);
+const Color orangeColor2 = Color(0xFFFFB52D);
 const Color secondaryColor = Color(0xFFE5E5E5);
 const Color primaryFontColor = Color(0xFF515151);
 // End of Colors

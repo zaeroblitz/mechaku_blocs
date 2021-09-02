@@ -44,27 +44,30 @@ class MainPage extends StatelessWidget {
     }
 
     Widget _bottomNav(int currentIndex) {
-      return Container(
-        margin: EdgeInsets.all(16),
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.white54,
-          borderRadius: BorderRadius.circular(50),
-        ),
-        child: SalomonBottomBar(
-          items: _bottomNavItem,
-          itemPadding: EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 12,
-          ),
+      return Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
           margin: EdgeInsets.all(16),
-          currentIndex: currentIndex,
-          onTap: (index) {
-            context.read<PageCubit>().setPage(index);
-          },
-          selectedItemColor: blackColor1,
-          selectedColorOpacity: 0.15,
-          unselectedItemColor: greyColor,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(50),
+          ),
+          child: SalomonBottomBar(
+            items: _bottomNavItem,
+            itemPadding: EdgeInsets.symmetric(
+              vertical: 10,
+              horizontal: 12,
+            ),
+            margin: EdgeInsets.all(16),
+            currentIndex: currentIndex,
+            onTap: (index) {
+              context.read<PageCubit>().setPage(index);
+            },
+            selectedItemColor: blackColor1,
+            selectedColorOpacity: 0.15,
+            unselectedItemColor: greyColor,
+          ),
         ),
       );
     }
@@ -72,9 +75,13 @@ class MainPage extends StatelessWidget {
     return BlocBuilder<PageCubit, int>(
       builder: (_, currentIndex) {
         return Scaffold(
-          body: _body(currentIndex),
+          body: Stack(
+            children: [
+              _body(currentIndex),
+              _bottomNav(currentIndex),
+            ],
+          ),
           backgroundColor: bgColor,
-          bottomNavigationBar: _bottomNav(currentIndex),
         );
       },
     );

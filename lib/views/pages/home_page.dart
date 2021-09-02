@@ -37,20 +37,25 @@ class Homepage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    user.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: whiteTextStyle1.copyWith(
-                      fontWeight: medium,
+                  // User Name
+                  Container(
+                    margin: EdgeInsets.only(bottom: 4),
+                    child: Text(
+                      user.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: whiteTextStyle1.copyWith(
+                        fontWeight: medium,
+                      ),
                     ),
                   ),
-                  SizedBox(height: 4),
+
+                  // User Balance
                   Text(
                     NumberFormat.currency(
                       locale: 'ID',
                       symbol: 'IDR ',
-                      decimalDigits: 0,
+                      decimalDigits: 2,
                     ).format(user.balance),
                     style: orangeTextStyle.copyWith(
                       fontWeight: bold,
@@ -119,35 +124,60 @@ class Homepage extends StatelessWidget {
     }
 
     Widget _bestSellerProducts() {
-      return Container(
-        margin: EdgeInsets.only(
-          bottom: 20,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
+      int index = -1;
+      return BlocBuilder<ProductCubit, ProductState>(
+        builder: (context, state) {
+          if (state is ProductBestSeller) {
+            return Container(
               margin: EdgeInsets.only(
-                left: 20,
-                bottom: 12,
+                bottom: 20,
               ),
-              child: Text(
-                'Best Seller',
-                style: titleTextStyle.copyWith(
-                  fontSize: 22,
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Best Seller Title
+                  Container(
+                    margin: EdgeInsets.only(
+                      left: 20,
+                      bottom: 12,
+                    ),
+                    child: Text(
+                      'Best Seller',
+                      style: titleTextStyle.copyWith(
+                        fontSize: 22,
+                      ),
+                    ),
+                  ),
+
+                  // Best Seller Items
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: state.products.map((product) {
+                        index++;
+                        return BestSellerItem(
+                          product: product,
+                          index: index,
+                          itemCount: state.products.length,
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
+            );
+          } else {
+            print(state.toString());
+            return SizedBox();
+          }
+        },
       );
     }
 
     Widget _categoriesBannner() {
       int index = -1;
 
-      return BlocConsumer<CategoryCubit, CategoryState>(
-        listener: (context, state) {},
+      return BlocBuilder<CategoryCubit, CategoryState>(
         builder: (context, state) {
           if (state is CategoryLoading) {
             return Center(
@@ -200,17 +230,73 @@ class Homepage extends StatelessWidget {
       );
     }
 
+    Widget _newArrivalProducts() {
+      int index = -1;
+      return BlocBuilder<ProductCubit, ProductState>(
+        builder: (context, state) {
+          if (state is ProductNewArrival) {
+            return Container(
+              margin: EdgeInsets.only(
+                bottom: 20,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // New Arrival Title
+                  Container(
+                    margin: EdgeInsets.only(
+                      left: 20,
+                      bottom: 12,
+                    ),
+                    child: Text(
+                      'New Arrival',
+                      style: titleTextStyle.copyWith(
+                        fontSize: 22,
+                      ),
+                    ),
+                  ),
+
+                  // New Arrival Items
+                  SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: state.products.map((product) {
+                        index++;
+                        return BestSellerItem(
+                          product: product,
+                          index: index,
+                          itemCount: state.products.length,
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return SizedBox();
+          }
+        },
+      );
+    }
+
     return BlocBuilder<AuthCubit, AuthState>(
-      builder: (_, state) {
-        if (state is AuthSuccess) {
+      builder: (_, userState) {
+        if (userState is AuthSuccess) {
           return SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _header(state.user),
+                _header(userState.user),
                 _searchField(),
                 _bestSellerProducts(),
                 _categoriesBannner(),
+                // _newArrivalProducts(),
+                SizedBox(
+                  height: 80,
+                ),
               ],
             ),
           );
