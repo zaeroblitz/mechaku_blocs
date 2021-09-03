@@ -1,13 +1,16 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../shared/theme.dart';
 import '../../models/models.dart';
 import '../../routes/AppRoutes.dart';
+import '../../cubit/product_cubit.dart';
 
+part 'product_tile.dart';
 part 'shimmer_item.dart';
 part 'category_item.dart';
 part 'custom_button.dart';

@@ -29,6 +29,15 @@ class ProductFlashSale extends ProductState {
   List<Object> get props => [products];
 }
 
+class ProductByName extends ProductState {
+  final List<ProductModel> products;
+
+  ProductByName(this.products);
+
+  @override
+  List<Object> get props => [products];
+}
+
 class ProductByCategory extends ProductState {
   final List<ProductModel> products;
 

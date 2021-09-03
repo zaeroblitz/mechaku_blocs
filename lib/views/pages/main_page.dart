@@ -75,6 +75,7 @@ class MainPage extends StatelessWidget {
     return BlocBuilder<PageCubit, int>(
       builder: (_, currentIndex) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           body: Stack(
             children: [
               _body(currentIndex),

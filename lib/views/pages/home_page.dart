@@ -6,6 +6,8 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  TextEditingController queryController = TextEditingController(text: '');
+
   @override
   void initState() {
     super.initState();
@@ -94,46 +96,74 @@ class _HomepageState extends State<Homepage> {
     }
 
     Widget _searchField() {
-      return Container(
-        margin: EdgeInsets.all(20),
-        child: Row(
-          children: [
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  vertical: 14,
-                  horizontal: 16,
-                ),
-                decoration: BoxDecoration(
-                  color: secondaryColor,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: TextFormField(
-                  autofocus: false,
-                  cursorColor: orangeColor,
-                  style: regularTextStyle,
-                  decoration: InputDecoration.collapsed(
-                    hintText: 'Find your own hobby',
-                    hintStyle: hintTextStyle,
+      return BlocConsumer<ProductCubit, ProductState>(
+        listener: (context, state) {
+          if (state is ProductByName) {
+            Navigator.pushNamed(
+              context,
+              AppRoutes.search_page,
+              arguments: state.products,
+            );
+          } else if (state is ProductFailed) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: pinkColor,
+                content: Text(state.error),
+              ),
+            );
+          }
+        },
+        builder: (context, state) {
+          return Container(
+            margin: EdgeInsets.all(20),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 14,
+                      horizontal: 16,
+                    ),
+                    decoration: BoxDecoration(
+                      color: secondaryColor,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: TextFormField(
+                      autofocus: false,
+                      controller: queryController,
+                      cursorColor: orangeColor,
+                      style: regularTextStyle,
+                      decoration: InputDecoration.collapsed(
+                        hintText: 'Find your own hobby',
+                        hintStyle: hintTextStyle,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                SizedBox(width: 24),
+                GestureDetector(
+                  onTap: () {
+                    context
+                        .read<ProductCubit>()
+                        .getProductsByName(queryController.text);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: blackColor2,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Icon(
+                      CupertinoIcons.search,
+                      color: whiteColor,
+                      size: 24,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            SizedBox(width: 24),
-            Container(
-              padding: EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: blackColor2,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Icon(
-                CupertinoIcons.search,
-                color: whiteColor,
-                size: 24,
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       );
     }
 
@@ -339,9 +369,10 @@ class _HomepageState extends State<Homepage> {
           );
         } else {
           return Center(
-            child: Text(
-              'Homepage',
-              style: regularTextStyle,
+            child: SpinKitWanderingCubes(
+              size: 50,
+              color: blackColor2,
+              duration: Duration(seconds: 3),
             ),
           );
         }

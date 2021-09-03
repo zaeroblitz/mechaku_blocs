@@ -69,13 +69,29 @@ class ProductService {
     }
   }
 
+  // Get Products by Name
+  Future<List<ProductModel>> getProductsByName(String name) async {
+    try {
+      QuerySnapshot snapshot = await _productRef
+          .where('name', isGreaterThanOrEqualTo: name)
+          .where('name', isLessThanOrEqualTo: name + '\uf8ff')
+          .get();
+
+      List<ProductModel> products = snapshot.docs.map((doc) {
+        return ProductModel.fromJson(doc.data() as Map<String, dynamic>);
+      }).toList();
+
+      return products;
+    } catch (e) {
+      throw e;
+    }
+  }
+
   // Get Products by Category
   Future<List<ProductModel>> getProductsByCategory(String category) async {
     try {
-      QuerySnapshot snapshot = await _productRef
-          .where('category', isEqualTo: category)
-          .orderBy('name')
-          .get();
+      QuerySnapshot snapshot =
+          await _productRef.where('category', isEqualTo: category).get();
 
       List<ProductModel> bestSellerProducts = snapshot.docs.map((doc) {
         return ProductModel.fromJson(doc.data() as Map<String, dynamic>);

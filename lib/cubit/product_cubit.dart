@@ -18,7 +18,7 @@ class ProductCubit extends Cubit<ProductState> {
 
       emit(ProductSuccess(products));
     } catch (e) {
-      throw e;
+      emit(ProductFailed(e.toString()));
     }
   }
 
@@ -32,7 +32,19 @@ class ProductCubit extends Cubit<ProductState> {
 
       emit(ProductFlashSale(products));
     } catch (e) {
-      throw e;
+      emit(ProductFailed(e.toString()));
+    }
+  }
+
+  // Get Products by Name
+  void getProductsByName(String name) async {
+    try {
+      emit(ProductLoading());
+      List<ProductModel> products =
+          await ProductService().getProductsByName(name);
+      emit(ProductByName(products));
+    } catch (e) {
+      emit(ProductFailed(e.toString()));
     }
   }
 
@@ -46,7 +58,7 @@ class ProductCubit extends Cubit<ProductState> {
 
       emit(ProductByCategory(products));
     } catch (e) {
-      throw e;
+      emit(ProductFailed(e.toString()));
     }
   }
 }
