@@ -18,4 +18,5 @@ part 'custom_button.dart';
 part 'best_seller_item.dart';
 part 'new_arrival_item.dart';
 part 'custom_text_field.dart';
+part 'product_not_found.dart';
 part 'custom_alert_dialog.dart';

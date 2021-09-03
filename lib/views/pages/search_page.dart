@@ -125,22 +125,9 @@ class SearchPage extends StatelessWidget {
       );
     }
 
-    Widget _productsNotFound() {
-      return Center(
-        child: Text(
-          'Ooops, no product found',
-          style: regularTextStyle.copyWith(
-            fontSize: 24,
-            fontWeight: bold,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      );
-    }
-
     return Scaffold(
       body: (products.isEmpty)
-          ? _productsNotFound()
+          ? ProductNotFound()
           : SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

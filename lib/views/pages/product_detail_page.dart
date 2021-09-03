@@ -276,23 +276,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
               // Add to Cart Button
               Expanded(
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: blackColor2,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      'Add to Cart',
-                      textAlign: TextAlign.center,
-                      style: whiteTextStyle1.copyWith(
-                        fontSize: 16,
-                        fontWeight: semiBold,
-                      ),
-                    ),
-                  ),
+                child: CustomButton(
+                  onPressed: () {},
+                  text: 'Add to Cart',
                 ),
               ),
             ],
