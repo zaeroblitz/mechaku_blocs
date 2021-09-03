@@ -1,17 +1,26 @@
 part of 'pages.dart';
 
-class CategoryPage extends StatelessWidget {
+class CategoryPage extends StatefulWidget {
+  final CategoryModel category;
+
+  CategoryPage(this.category);
+
+  @override
+  _CategoryPageState createState() => _CategoryPageState();
+}
+
+class _CategoryPageState extends State<CategoryPage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<ProductCubit>().getProductsByCategory(widget.category.name);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final CategoryArgument categoryArgument =
-        ModalRoute.of(context)!.settings.arguments as CategoryArgument;
-
-    final CategoryModel category = categoryArgument.category;
-    final List<ProductModel> products = categoryArgument.products;
-
     Widget _header() {
       return CachedNetworkImage(
-        imageUrl: category.banner,
+        imageUrl: widget.category.banner,
         placeholder: (_, __) => ShimmerItem(
             width: MediaQuery.of(context).size.width - 20, height: 90),
         imageBuilder: (_, imageProvider) => Container(
@@ -55,8 +64,7 @@ class CategoryPage extends StatelessWidget {
                   child: Row(
                     children: [
                       GestureDetector(
-                        onTap: () => Navigator.pushNamedAndRemoveUntil(
-                            context, AppRoutes.mainpage, (route) => false),
+                        onTap: () => Navigator.pop(context),
                         child: Container(
                           margin: EdgeInsets.only(right: 12),
                           padding: EdgeInsets.all(2),
@@ -72,7 +80,7 @@ class CategoryPage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        category.name,
+                        widget.category.name,
                         style: whiteTextStyle1.copyWith(
                           fontSize: 16,
                           fontWeight: semiBold,
@@ -89,78 +97,90 @@ class CategoryPage extends StatelessWidget {
     }
 
     Widget _products() {
-      return SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Container(
-          margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            bottom: 20,
-          ),
-          child: BlocBuilder<ProductCubit, ProductState>(
-            builder: (context, state) {
-              if (state is ProductLoading) {
-                return Center(
-                  child: SpinKitWanderingCubes(
-                    size: 50,
-                    color: blackColor2,
-                    duration: Duration(seconds: 3),
-                  ),
-                );
-              } else if (state is ProductByCategory) {
-                return SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 20,
-                    mainAxisSpacing: 20,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.only(bottom: 10),
-                    childAspectRatio: (148 / 192),
-                    children: products.map((product) {
-                      return ProductTile(product);
-                    }).toList(),
-                  ),
-                );
-              } else {
-                return SpinKitWanderingCubes(
-                  size: 50,
-                  color: blackColor2,
-                  duration: Duration(seconds: 3),
-                );
-              }
-            },
-          ),
-        ),
-      );
-    }
+      return BlocBuilder<ProductCubit, ProductState>(
+        builder: (context, state) {
+          if (state is ProductLoading) {
+            return SpinKitWanderingCubes(
+              size: 50,
+              color: blackColor2,
+              duration: Duration(seconds: 3),
+            );
+          } else if (state is ProductByCategory) {
+            return SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Container(
+                margin: EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  bottom: 20,
+                ),
+                child: BlocBuilder<ProductCubit, ProductState>(
+                  builder: (context, state) {
+                    if (state is ProductLoading) {
+                      return Center(
+                        child: SpinKitWanderingCubes(
+                          size: 50,
+                          color: blackColor2,
+                          duration: Duration(seconds: 3),
+                        ),
+                      );
+                    } else if (state is ProductByCategory) {
+                      if (state.products.isEmpty) {
+                        return Center(
+                          child: Text(
+                            'Ooops, no product found',
+                            style: regularTextStyle.copyWith(
+                              fontSize: 24,
+                              fontWeight: bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        );
+                      }
 
-    Widget _productsNotFound() {
-      return Center(
-        child: Text(
-          'Ooops, no product found',
-          style: regularTextStyle.copyWith(
-            fontSize: 24,
-            fontWeight: bold,
-          ),
-          textAlign: TextAlign.center,
-        ),
+                      return SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: GridView.count(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 20,
+                          shrinkWrap: true,
+                          padding: EdgeInsets.only(bottom: 10),
+                          childAspectRatio: (148 / 192),
+                          children: state.products.map((product) {
+                            return ProductTile(product);
+                          }).toList(),
+                        ),
+                      );
+                    } else {
+                      return SpinKitWanderingCubes(
+                        size: 50,
+                        color: blackColor2,
+                        duration: Duration(seconds: 3),
+                      );
+                    }
+                  },
+                ),
+              ),
+            );
+          } else {
+            return SizedBox();
+          }
+        },
       );
     }
 
     return Scaffold(
-      body: products.isEmpty
-          ? _productsNotFound()
-          : SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _header(),
-                  _products(),
-                ],
-              ),
-            ),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _header(),
+            _products(),
+          ],
+        ),
+      ),
     );
   }
 }
