@@ -7,6 +7,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../shared/theme.dart';
 import '../../models/models.dart';
+import '../../cubit/auth_cubit.dart';
 import '../../routes/AppRoutes.dart';
 import '../../views/pages/pages.dart';
 import '../../cubit/product_cubit.dart';

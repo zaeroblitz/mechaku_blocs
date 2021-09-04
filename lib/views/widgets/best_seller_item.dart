@@ -3,10 +3,15 @@ part of 'widgets.dart';
 class BestSellerItem extends StatelessWidget {
   final int index;
   final int itemCount;
+  final UserModel user;
   final ProductModel product;
 
-  BestSellerItem(
-      {required this.product, required this.index, required this.itemCount});
+  BestSellerItem({
+    required this.product,
+    required this.index,
+    required this.itemCount,
+    required this.user,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +67,21 @@ class BestSellerItem extends StatelessWidget {
 
                         // Bookmark Icon
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            if (user.wishlists.contains(product.id)) {
+                              user.wishlists.remove(product.id);
+                              context
+                                  .read<AuthCubit>()
+                                  .removeFromWishlists(user, product);
+                              context.read<AuthCubit>().getCurrentUser(user.id);
+                            } else {
+                              user.wishlists.add(product.id);
+                              context
+                                  .read<AuthCubit>()
+                                  .addToWishlists(user, product);
+                              context.read<AuthCubit>().getCurrentUser(user.id);
+                            }
+                          },
                           child: Container(
                             margin: EdgeInsets.only(
                               top: 8,
@@ -77,8 +96,12 @@ class BestSellerItem extends StatelessWidget {
                                   shape: BoxShape.circle,
                                 ),
                                 child: Icon(
-                                  CupertinoIcons.bookmark,
-                                  color: primaryFontColor,
+                                  user.wishlists.contains(product.id)
+                                      ? CupertinoIcons.heart_fill
+                                      : CupertinoIcons.heart,
+                                  color: user.wishlists.contains(product.id)
+                                      ? pinkColor
+                                      : primaryFontColor,
                                   size: 16,
                                 ),
                               ),

@@ -97,7 +97,7 @@ class _CategoryPageState extends State<CategoryPage> {
       );
     }
 
-    Widget _products() {
+    Widget _products(UserModel user) {
       return BlocBuilder<ProductCubit, ProductState>(
         builder: (context, state) {
           if (state is ProductLoading) {
@@ -111,28 +111,28 @@ class _CategoryPageState extends State<CategoryPage> {
           } else if (state is ProductByCategory) {
             if (state.products.isEmpty) {
               return ProductNotFound();
-            }
-
-            return Container(
-              margin: EdgeInsets.only(
-                left: 20,
-                right: 20,
-                bottom: 30,
-              ),
-              child: GridView.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-                shrinkWrap: true,
-                controller: ScrollController(
-                  keepScrollOffset: true,
+            } else {
+              return Container(
+                margin: EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  bottom: 30,
                 ),
-                childAspectRatio: (148 / 192),
-                children: state.products.map((product) {
-                  return ProductTile(product);
-                }).toList(),
-              ),
-            );
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20,
+                  shrinkWrap: true,
+                  controller: ScrollController(
+                    keepScrollOffset: true,
+                  ),
+                  childAspectRatio: (148 / 192),
+                  children: state.products.map((product) {
+                    return ProductTile(product, user);
+                  }).toList(),
+                ),
+              );
+            }
           } else {
             return SpinKitWanderingCubes(
               size: 50,
@@ -145,15 +145,27 @@ class _CategoryPageState extends State<CategoryPage> {
     }
 
     return Scaffold(
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _header(),
-            _products(),
-          ],
-        ),
+      body: BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, state) {
+          if (state is AuthSuccess) {
+            return SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _header(),
+                  _products(state.user),
+                ],
+              ),
+            );
+          } else {
+            return SpinKitWanderingCubes(
+              size: 50,
+              color: blackColor2,
+              duration: Duration(seconds: 3),
+            );
+          }
+        },
       ),
     );
   }

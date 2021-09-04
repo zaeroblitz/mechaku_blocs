@@ -81,7 +81,7 @@ class SearchPage extends StatelessWidget {
       );
     }
 
-    Widget _products() {
+    Widget _products(UserModel user) {
       return Container(
         margin: EdgeInsets.only(
           left: 20,
@@ -109,7 +109,7 @@ class SearchPage extends StatelessWidget {
                   padding: EdgeInsets.only(bottom: 10),
                   childAspectRatio: (148 / 192),
                   children: products.map((product) {
-                    return ProductTile(product);
+                    return ProductTile(product, user);
                   }).toList(),
                 ),
               );
@@ -128,14 +128,26 @@ class SearchPage extends StatelessWidget {
     return Scaffold(
       body: (products.isEmpty)
           ? ProductNotFound()
-          : SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _header(),
-                  _products(),
-                ],
-              ),
+          : BlocBuilder<AuthCubit, AuthState>(
+              builder: (context, state) {
+                if (state is AuthSuccess) {
+                  return SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _header(),
+                        _products(state.user),
+                      ],
+                    ),
+                  );
+                } else {
+                  return SpinKitWanderingCubes(
+                    size: 50,
+                    color: blackColor2,
+                    duration: Duration(seconds: 3),
+                  );
+                }
+              },
             ),
     );
   }

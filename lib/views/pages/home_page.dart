@@ -167,7 +167,7 @@ class _HomepageState extends State<Homepage> {
       );
     }
 
-    Widget _bestSellerProducts() {
+    Widget _bestSellerProducts(UserModel user) {
       int index = -1;
       return BlocBuilder<ProductBestSellerCubit, ProductBestSellerState>(
         builder: (context, state) {
@@ -214,6 +214,7 @@ class _HomepageState extends State<Homepage> {
                           product: product,
                           index: index,
                           itemCount: state.products.length,
+                          user: user,
                         );
                       }).toList(),
                     ),
@@ -288,7 +289,7 @@ class _HomepageState extends State<Homepage> {
       );
     }
 
-    Widget _newArrivalProducts() {
+    Widget _newArrivalProducts(UserModel user) {
       int index = -1;
       return BlocBuilder<ProductNewArrivalCubit, ProductNewArrivalState>(
         builder: (context, state) {
@@ -360,9 +361,9 @@ class _HomepageState extends State<Homepage> {
               children: [
                 _header(userState.user),
                 _searchField(),
-                _bestSellerProducts(),
+                _bestSellerProducts(userState.user),
                 _categoriesBannner(),
-                _newArrivalProducts(),
+                _newArrivalProducts(userState.user),
                 SizedBox(height: 80),
               ],
             ),

@@ -66,6 +66,32 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  void updateuser(UserModel user) async {
+    try {
+      emit(AuthLoading());
+      UserModel userModel = await UserService().update(user);
+      emit(AuthSuccess(userModel));
+    } catch (e) {
+      emit(AuthFailed(e.toString()));
+    }
+  }
+
+  void addToWishlists(UserModel user, ProductModel product) async {
+    try {
+      await UserService().update(user);
+    } catch (e) {
+      emit(AuthFailed(e.toString()));
+    }
+  }
+
+  void removeFromWishlists(UserModel user, ProductModel product) async {
+    try {
+      await UserService().removeFromWishlists(user, product);
+    } catch (e) {
+      emit(AuthFailed(e.toString()));
+    }
+  }
+
   void signOut() async {
     try {
       emit(AuthLoading());

@@ -2,7 +2,8 @@ part of 'widgets.dart';
 
 class ProductTile extends StatelessWidget {
   final ProductModel product;
-  ProductTile(this.product);
+  final UserModel user;
+  ProductTile(this.product, this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +14,7 @@ class ProductTile extends StatelessWidget {
       },
       child: Stack(
         children: [
+          // Product Image
           Align(
             alignment: Alignment.topCenter,
             child: CachedNetworkImage(
@@ -38,6 +40,8 @@ class ProductTile extends StatelessWidget {
               ),
             ),
           ),
+
+          // Product Information
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -61,6 +65,7 @@ class ProductTile extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Product Name
                       Expanded(
                         child: Text(
                           product.name,
@@ -76,32 +81,57 @@ class ProductTile extends StatelessWidget {
                       SizedBox(
                         width: 12,
                       ),
+
+                      // Wishlist Icon
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          if (user.wishlists.contains(product.id)) {
+                            user.wishlists.remove(product.id);
+                            context
+                                .read<AuthCubit>()
+                                .removeFromWishlists(user, product);
+                            context.read<AuthCubit>().getCurrentUser(user.id);
+                          } else {
+                            user.wishlists.add(product.id);
+                            context
+                                .read<AuthCubit>()
+                                .addToWishlists(user, product);
+                            context.read<AuthCubit>().getCurrentUser(user.id);
+                          }
+                        },
                         child: Container(
                           width: 16,
                           height: 16,
                           child: CircleAvatar(
                             backgroundColor: secondaryColor,
                             child: Icon(
-                              Icons.favorite_rounded,
+                              user.wishlists.contains(product.id)
+                                  ? CupertinoIcons.heart_fill
+                                  : CupertinoIcons.heart,
+                              color: user.wishlists.contains(product.id)
+                                  ? pinkColor
+                                  : greyColor,
                               size: 8,
-                              color: greyColor,
                             ),
                           ),
                         ),
                       ),
                     ],
                   ),
+
+                  // Product Category
                   Text(
                     product.category,
                     style: hintTextStyle.copyWith(
                       fontSize: 8,
                     ),
                   ),
+
+                  // Product Price & Buy Now Button
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Product Price
                       Text(
                         NumberFormat.currency(
                           locale: 'ID',
@@ -116,6 +146,8 @@ class ProductTile extends StatelessWidget {
                       SizedBox(
                         width: 5,
                       ),
+
+                      // Buy Now Button
                       GestureDetector(
                         onTap: () {},
                         child: Container(

@@ -135,7 +135,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       );
     }
 
-    Widget _productInformation() {
+    Widget _productInformation(UserModel user) {
       Widget _productInformationHeader() {
         return Row(
           children: [
@@ -166,17 +166,34 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             ),
 
             // Bookmark Icon
-            Container(
-              margin: EdgeInsets.only(left: 12),
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: bgColor,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                CupertinoIcons.bookmark,
-                size: 24,
-                color: greyColor,
+            GestureDetector(
+              onTap: () {
+                if (user.wishlists.contains(product.id)) {
+                  user.wishlists.remove(product.id);
+                  context.read<AuthCubit>().removeFromWishlists(user, product);
+                  context.read<AuthCubit>().getCurrentUser(user.id);
+                } else {
+                  user.wishlists.add(product.id);
+                  context.read<AuthCubit>().addToWishlists(user, product);
+                  context.read<AuthCubit>().getCurrentUser(user.id);
+                }
+              },
+              child: Container(
+                margin: EdgeInsets.only(left: 12),
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: bgColor,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  user.wishlists.contains(product.id)
+                      ? CupertinoIcons.heart_fill
+                      : CupertinoIcons.heart,
+                  color: user.wishlists.contains(product.id)
+                      ? pinkColor
+                      : greyColor,
+                  size: 24,
+                ),
               ),
             ),
           ],
@@ -307,15 +324,27 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     }
 
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Stack(
-            children: [
-              _productGallery(),
-              _productInformation(),
-            ],
-          ),
-        ),
+      body: BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, state) {
+          if (state is AuthSuccess) {
+            return SafeArea(
+              child: SingleChildScrollView(
+                child: Stack(
+                  children: [
+                    _productGallery(),
+                    _productInformation(state.user),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return SpinKitWanderingCubes(
+              size: 50,
+              color: blackColor2,
+              duration: Duration(seconds: 3),
+            );
+          }
+        },
       ),
     );
   }
