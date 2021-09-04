@@ -33,7 +33,6 @@ class UserService {
 
   Future<UserModel> update(UserModel user) async {
     try {
-      print('product added');
       await _userReference.doc(user.id).update(user.toJson());
       return user;
     } catch (e) {
@@ -43,7 +42,6 @@ class UserService {
 
   Future<void> removeFromWishlists(UserModel user, ProductModel product) async {
     try {
-      print('product with ${product.name} deleted');
       await _userReference.doc(user.id).update({
         'wishlists': FieldValue.arrayRemove([product.id])
       });

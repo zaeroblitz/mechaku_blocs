@@ -106,6 +106,9 @@ class SearchPage extends StatelessWidget {
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 20,
                   shrinkWrap: true,
+                  controller: ScrollController(
+                    keepScrollOffset: true,
+                  ),
                   padding: EdgeInsets.only(bottom: 10),
                   childAspectRatio: (148 / 192),
                   children: products.map((product) {

@@ -15,13 +15,9 @@ class CategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => CategoryPage(category),
-          ),
-        );
         context.read<ProductCubit>().getProductsByCategory(category.name);
+        Navigator.pushNamed(context, AppRoutes.category_page,
+            arguments: category);
       },
       child: Container(
         width: 288,

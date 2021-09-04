@@ -20,6 +20,7 @@ class AuthService {
         username: username,
         balance: 2000000,
         profilePicture: 'https://ui-avatars.com/api/?name=$name',
+        wishlists: [],
       );
 
       await UserService().setUser(user);
@@ -77,18 +78,25 @@ class AuthService {
       UserCredential userCredential =
           await _firebaseAuth.signInWithCredential(credential);
 
-      UserModel user = UserModel(
-        balance: 2000000,
-        id: userCredential.user!.uid,
-        email: userCredential.user!.email as String,
-        name: userCredential.user!.displayName as String,
-        username: userCredential.user!.displayName as String,
-        profilePicture: userCredential.user!.photoURL as String,
-      );
+      UserModel user =
+          await UserService().getUserById(userCredential.user!.uid);
 
-      await UserService().setUser(user);
+      if (user.id.contains(userCredential.user!.uid)) {
+        return user;
+      } else {
+        user = UserModel(
+          balance: 2000000,
+          id: userCredential.user!.uid,
+          email: userCredential.user!.email as String,
+          name: userCredential.user!.displayName as String,
+          username: userCredential.user!.displayName as String,
+          profilePicture: userCredential.user!.photoURL as String,
+        );
 
-      return user;
+        await UserService().setUser(user);
+
+        return user;
+      }
     } catch (e) {
       throw e;
     }

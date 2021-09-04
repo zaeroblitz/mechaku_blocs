@@ -8,14 +8,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../../shared/theme.dart';
 import '../../models/models.dart';
 import '../../cubit/auth_cubit.dart';
+import '../../cubit/page_cubit.dart';
 import '../../routes/AppRoutes.dart';
-import '../../views/pages/pages.dart';
 import '../../cubit/product_cubit.dart';
 
 part 'product_tile.dart';
 part 'shimmer_item.dart';
 part 'category_item.dart';
 part 'custom_button.dart';
+part 'wishlist_item.dart';
 part 'best_seller_item.dart';
 part 'new_arrival_item.dart';
 part 'custom_text_field.dart';

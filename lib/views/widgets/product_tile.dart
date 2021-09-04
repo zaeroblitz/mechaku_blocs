@@ -103,11 +103,11 @@ class ProductTile extends StatelessWidget {
                           width: 16,
                           height: 16,
                           child: CircleAvatar(
-                            backgroundColor: secondaryColor,
+                            backgroundColor: user.wishlists.contains(product.id)
+                                ? whiteColor
+                                : secondaryColor,
                             child: Icon(
-                              user.wishlists.contains(product.id)
-                                  ? CupertinoIcons.heart_fill
-                                  : CupertinoIcons.heart,
+                              CupertinoIcons.heart_fill,
                               color: user.wishlists.contains(product.id)
                                   ? pinkColor
                                   : greyColor,

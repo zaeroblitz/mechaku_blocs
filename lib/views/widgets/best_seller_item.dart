@@ -92,16 +92,16 @@ class BestSellerItem extends StatelessWidget {
                               child: Container(
                                 padding: EdgeInsets.all(4),
                                 decoration: BoxDecoration(
-                                  color: whiteColor,
+                                  color: user.wishlists.contains(product.id)
+                                      ? whiteColor
+                                      : secondaryColor,
                                   shape: BoxShape.circle,
                                 ),
                                 child: Icon(
-                                  user.wishlists.contains(product.id)
-                                      ? CupertinoIcons.heart_fill
-                                      : CupertinoIcons.heart,
+                                  CupertinoIcons.heart_fill,
                                   color: user.wishlists.contains(product.id)
                                       ? pinkColor
-                                      : primaryFontColor,
+                                      : greyColor,
                                   size: 16,
                                 ),
                               ),

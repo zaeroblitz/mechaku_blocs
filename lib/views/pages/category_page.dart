@@ -1,26 +1,14 @@
 part of 'pages.dart';
 
-class CategoryPage extends StatefulWidget {
-  final CategoryModel category;
-
-  CategoryPage(this.category);
-
-  @override
-  _CategoryPageState createState() => _CategoryPageState();
-}
-
-class _CategoryPageState extends State<CategoryPage> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<ProductCubit>().getProductsByCategory(widget.category.name);
-  }
-
+class CategoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final CategoryModel category =
+        ModalRoute.of(context)!.settings.arguments as CategoryModel;
+
     Widget _header() {
       return CachedNetworkImage(
-        imageUrl: widget.category.banner,
+        imageUrl: category.banner,
         placeholder: (_, __) => ShimmerItem(
             width: MediaQuery.of(context).size.width - 20, height: 90),
         imageBuilder: (_, imageProvider) => Container(
@@ -81,7 +69,7 @@ class _CategoryPageState extends State<CategoryPage> {
                         ),
                       ),
                       Text(
-                        widget.category.name + 'Products',
+                        category.name + 'Products',
                         style: whiteTextStyle1.copyWith(
                           fontSize: 16,
                           fontWeight: semiBold,
