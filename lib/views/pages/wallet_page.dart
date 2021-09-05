@@ -200,8 +200,11 @@ class WalletPage extends StatelessWidget {
                 top: 30,
               ),
               child: CustomButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.top_up_page);
+                },
                 text: 'Top Up',
+                color: orangeColor2,
                 width: MediaQuery.of(context).size.width - 60,
               ),
             ),

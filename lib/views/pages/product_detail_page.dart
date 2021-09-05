@@ -183,14 +183,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: user.wishlists.contains(product.id)
-                      ? whiteColor
+                      ? pinkColor
                       : secondaryColor,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   CupertinoIcons.heart_fill,
                   color: user.wishlists.contains(product.id)
-                      ? pinkColor
+                      ? whiteColor
                       : greyColor,
                   size: 24,
                 ),

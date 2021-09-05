@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:mechaku_blocs/cubit/product_best_seller_cubit.dart';
 import 'package:mechaku_blocs/cubit/product_cubit.dart';
 import 'package:mechaku_blocs/cubit/product_new_arrival_cubit.dart';
+import 'package:mechaku_blocs/cubit/top_up_cubit.dart';
 
 import '/shared/theme.dart';
 import '/routes/AppPages.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => AuthCubit()),
         BlocProvider(create: (_) => PageCubit()),
+        BlocProvider(create: (_) => TopUpCubit(0, false)),
         BlocProvider(create: (_) => ProductCubit()),
         BlocProvider(create: (_) => CategoryCubit()),
         BlocProvider(create: (_) => ProductBestSellerCubit()),

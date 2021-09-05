@@ -30,6 +30,7 @@ part 'home_page.dart';
 part 'chat_page.dart';
 part 'search_page.dart';
 part 'splash_page.dart';
+part 'top_up_page.dart';
 part 'wallet_page.dart';
 part 'sign_in_page.dart';
 part 'sign_up_page.dart';

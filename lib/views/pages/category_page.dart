@@ -53,7 +53,10 @@ class CategoryPage extends StatelessWidget {
                   child: Row(
                     children: [
                       GestureDetector(
-                        onTap: () => Navigator.pop(context),
+                        onTap: () {
+                          Navigator.pushReplacementNamed(
+                              context, AppRoutes.mainpage);
+                        },
                         child: Container(
                           margin: EdgeInsets.only(right: 12),
                           padding: EdgeInsets.all(2),

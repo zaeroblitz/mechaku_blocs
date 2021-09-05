@@ -49,7 +49,11 @@ class CustomHeader extends StatelessWidget {
               child: Row(
                 children: [
                   GestureDetector(
-                    onTap: () => context.read<PageCubit>().setPage(0),
+                    onTap: () {
+                      context.read<PageCubit>().setPage(0);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, AppRoutes.mainpage, (route) => false);
+                    },
                     child: Container(
                       margin: EdgeInsets.only(right: 12),
                       padding: EdgeInsets.all(2),

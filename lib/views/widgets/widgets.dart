@@ -10,6 +10,7 @@ import '../../models/models.dart';
 import '../../cubit/auth_cubit.dart';
 import '../../cubit/page_cubit.dart';
 import '../../routes/AppRoutes.dart';
+import '../../cubit/top_up_cubit.dart';
 import '../../cubit/product_cubit.dart';
 
 part 'product_tile.dart';
@@ -18,8 +19,10 @@ part 'category_item.dart';
 part 'custom_button.dart';
 part 'custom_header.dart';
 part 'wishlist_item.dart';
+part 'amount_template.dart';
 part 'best_seller_item.dart';
 part 'new_arrival_item.dart';
 part 'custom_text_field.dart';
 part 'product_not_found.dart';
 part 'custom_alert_dialog.dart';
+part 'amount_template_item.dart';

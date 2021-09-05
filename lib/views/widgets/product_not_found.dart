@@ -21,7 +21,11 @@ class ProductNotFound extends StatelessWidget {
           ),
           SizedBox(height: 20),
           CustomButton(
-            onPressed: () => context.read<PageCubit>().setPage(0),
+            onPressed: () {
+              context.read<PageCubit>().setPage(0);
+              Navigator.pushNamedAndRemoveUntil(
+                  context, AppRoutes.mainpage, (route) => false);
+            },
             text: 'Get Back',
             width: MediaQuery.of(context).size.width - 120,
           ),
