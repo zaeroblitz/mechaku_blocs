@@ -1,25 +1,18 @@
 part of 'widgets.dart';
 
-class AmountTemplateItem extends StatefulWidget {
-  final int balance;
+class AmountTemplateItem extends StatelessWidget {
+  final int amount;
+  final bool isSelected;
+  final Function onTap;
 
-  AmountTemplateItem(this.balance);
+  AmountTemplateItem(
+      {required this.amount, required this.isSelected, required this.onTap});
 
-  @override
-  _AmountTemplateItemState createState() => _AmountTemplateItemState();
-}
-
-class _AmountTemplateItemState extends State<AmountTemplateItem> {
-  bool isSelected = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.read<TopUpCubit>().setSelectedTopUp(widget.balance);
-        context.read<TopUpCubit>().isSelectedTopUp(widget.balance);
-        setState(() {
-          isSelected = context.read<TopUpCubit>().isSelected;
-        });
+        onTap();
       },
       child: Container(
         padding: EdgeInsets.symmetric(
@@ -27,7 +20,7 @@ class _AmountTemplateItemState extends State<AmountTemplateItem> {
           horizontal: 4,
         ),
         decoration: BoxDecoration(
-          color: isSelected ? blackColor2.withOpacity(0.75) : whiteColor2,
+          color: isSelected ? blackColor2.withOpacity(0.95) : whiteColor2,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: secondaryColor,
@@ -50,7 +43,7 @@ class _AmountTemplateItemState extends State<AmountTemplateItem> {
                   locale: 'ID',
                   symbol: '',
                   decimalDigits: 0,
-                ).format(widget.balance),
+                ).format(amount),
                 style: isSelected
                     ? whiteTextStyle2.copyWith(
                         fontSize: 16,
