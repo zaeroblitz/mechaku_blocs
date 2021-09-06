@@ -267,6 +267,9 @@ class _TopUpPageState extends State<TopUpPage> {
                     context
                         .read<TransactionCubit>()
                         .setTransaction(transactionModel);
+
+                    Navigator.pushNamedAndRemoveUntil(context,
+                        AppRoutes.success_top_up_page, (route) => false);
                   }
                 },
                 text: 'Top Up Now',

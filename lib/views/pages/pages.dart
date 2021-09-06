@@ -40,3 +40,4 @@ part 'category_page.dart';
 part 'settings_page.dart';
 part 'wishlist_page.dart';
 part 'product_detail_page.dart';
+part 'success_top_up_page.dart';
