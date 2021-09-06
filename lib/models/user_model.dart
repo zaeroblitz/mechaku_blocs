@@ -1,5 +1,6 @@
 part of 'models.dart';
 
+// ignore: must_be_immutable
 class UserModel extends Equatable {
   final String id;
   final String email;
@@ -7,7 +8,7 @@ class UserModel extends Equatable {
   final String username;
   final String profilePicture;
   final String role;
-  final int balance;
+  int balance;
   final List<String> wishlists;
 
   UserModel({

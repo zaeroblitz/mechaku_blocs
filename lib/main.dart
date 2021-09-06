@@ -10,6 +10,7 @@ import '/cubit/auth_cubit.dart';
 import '/cubit/page_cubit.dart';
 import '/cubit/product_cubit.dart';
 import '/cubit/category_cubit.dart';
+import 'cubit/transaction_cubit.dart';
 import '/cubit/product_best_seller_cubit.dart';
 import '/cubit/product_new_arrival_cubit.dart';
 
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => PageCubit()),
         BlocProvider(create: (_) => ProductCubit()),
         BlocProvider(create: (_) => CategoryCubit()),
+        BlocProvider(create: (_) => TransactionCubit()),
         BlocProvider(create: (_) => ProductBestSellerCubit()),
         BlocProvider(create: (_) => ProductNewArrivalCubit()),
       ],

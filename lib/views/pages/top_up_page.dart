@@ -14,9 +14,77 @@ class _TopUpPageState extends State<TopUpPage> {
   @override
   Widget build(BuildContext context) {
     Widget _header() {
-      return CustomHeader(
-        headerBanner: AssetImage('assets/transformers.png'),
-        headerTitle: 'Top Up',
+      return Container(
+        width: MediaQuery.of(context).size.width - 20,
+        height: 90,
+        margin: EdgeInsets.symmetric(
+          vertical: 30,
+          horizontal: 10,
+        ),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage('assets/transformers.png'),
+          ),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Stack(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width - 20,
+              height: 90,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    blackColor1.withOpacity(0.95),
+                    blackColor1.withOpacity(0.25),
+                  ],
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 16,
+                ),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(right: 12),
+                        padding: EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          color: whiteColor2,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.chevron_left,
+                          size: 24,
+                          color: blackColor2,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      'Top Up',
+                      style: whiteTextStyle1.copyWith(
+                        fontSize: 16,
+                        fontWeight: semiBold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       );
     }
 
@@ -171,7 +239,7 @@ class _TopUpPageState extends State<TopUpPage> {
       );
     }
 
-    Widget _button() {
+    Widget _button(UserModel user) {
       return (selectedAmount > 0)
           ? Center(
               child: CustomButton(
@@ -181,6 +249,24 @@ class _TopUpPageState extends State<TopUpPage> {
 
                   if (isValid) {
                     _key.currentState!.save();
+
+                    TransactionModel transactionModel = TransactionModel(
+                      amount: selectedAmount,
+                      picture: '',
+                      date:
+                          '${DateTime.now().dayName}, ${DateTime.now().day} ${DateTime.now().monthName} ${DateTime.now().year}',
+                      time: DateTime.now(),
+                      title: 'Top Up',
+                      userID: user.id,
+                    );
+
+                    context
+                        .read<AuthCubit>()
+                        .updateUserBalance(user, selectedAmount);
+
+                    context
+                        .read<TransactionCubit>()
+                        .setTransaction(transactionModel);
                   }
                 },
                 text: 'Top Up Now',
@@ -191,17 +277,29 @@ class _TopUpPageState extends State<TopUpPage> {
     }
 
     return Scaffold(
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _header(),
-            _customAmout(),
-            _templateAmount(),
-            _button(),
-          ],
-        ),
+      body: BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, state) {
+          if (state is AuthSuccess) {
+            return SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _header(),
+                  _customAmout(),
+                  _templateAmount(),
+                  _button(state.user),
+                ],
+              ),
+            );
+          } else {
+            return SpinKitWanderingCubes(
+              size: 50,
+              color: blackColor2,
+              duration: Duration(seconds: 3),
+            );
+          }
+        },
       ),
     );
   }

@@ -76,6 +76,27 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  void updateUserBalance(UserModel user, int amount) async {
+    try {
+      emit(AuthLoading());
+      UserModel userModel = UserModel(
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          balance: user.balance + amount,
+          profilePicture: user.profilePicture,
+          role: user.role,
+          username: user.username,
+          wishlists: user.wishlists);
+
+      await UserService().setUser(userModel);
+
+      emit(AuthSuccess(userModel));
+    } catch (e) {
+      emit(AuthFailed(e.toString()));
+    }
+  }
+
   void addToWishlists(UserModel user, ProductModel product) async {
     try {
       await UserService().update(user);

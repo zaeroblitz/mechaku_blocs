@@ -8,3 +8,4 @@ part 'auth_service.dart';
 part 'user_service.dart';
 part 'product_service.dart';
 part 'category_service.dart';
+part 'transaction_service.dart';
