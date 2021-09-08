@@ -78,13 +78,17 @@ class AuthService {
       UserCredential userCredential =
           await _firebaseAuth.signInWithCredential(credential);
 
-      UserModel user =
-          await UserService().getUserById(userCredential.user!.uid);
+      List<CheckUserModel> checkUser = await UserService().getAllUserEmail();
+      List<String> allUsersEmail = checkUser.map((e) {
+        return e.email;
+      }).toList();
 
-      if (user.id.contains(userCredential.user!.uid)) {
+      if (allUsersEmail.contains(userCredential.user!.email as String)) {
+        UserModel user =
+            await UserService().getUserById(userCredential.user!.uid);
         return user;
       } else {
-        user = UserModel(
+        UserModel user = UserModel(
           balance: 2000000,
           id: userCredential.user!.uid,
           email: userCredential.user!.email as String,

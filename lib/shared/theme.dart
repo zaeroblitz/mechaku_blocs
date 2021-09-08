@@ -6,6 +6,7 @@ const Color bgColor = Color(0xFFF0F0F0);
 const Color pinkColor = Color(0xFFF6577C);
 const Color greyColor = Color(0xFFAAAAAA);
 const Color whiteColor = Color(0xFFF1F0F2);
+const Color greenColor = Color(0xFF3E9D9D);
 const Color whiteColor2 = Color(0xFFFEFEFE);
 const Color blackColor1 = Color(0xFF414141);
 const Color blackColor2 = Color(0xFF333333);
@@ -64,5 +65,9 @@ TextStyle orangeTextStyle = GoogleFonts.poppins(
 
 TextStyle pinkTextStyle = GoogleFonts.poppins(
   color: pinkColor,
+);
+
+TextStyle greenTextStyle = GoogleFonts.poppins(
+  color: greenColor,
 );
 // End of Text Styles

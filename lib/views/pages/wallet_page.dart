@@ -1,12 +1,27 @@
 part of 'pages.dart';
 
-class WalletPage extends StatelessWidget {
+class WalletPage extends StatefulWidget {
+  @override
+  _WalletPageState createState() => _WalletPageState();
+}
+
+class _WalletPageState extends State<WalletPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    User? user = FirebaseAuth.instance.currentUser;
+    context.read<TransactionCubit>().getTransaction(user!.uid);
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget _header() {
       return CustomHeader(
-          headerBanner: AssetImage('assets/wallet_page_banner.png'),
-          headerTitle: 'Mechaku Wallet');
+        headerBanner: AssetImage('assets/wallet_page_banner.png'),
+        headerTitle: 'Mechaku Wallet',
+        onTap: () => context.read<PageCubit>().setPage(0),
+      );
     }
 
     Widget _wallet(UserModel user) {
@@ -213,20 +228,61 @@ class WalletPage extends StatelessWidget {
       );
     }
 
+    Widget _recentTransactions(List<TransactionModel> transactions) {
+      return Container(
+        margin: EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              child: Text(
+                'Recent Transaction',
+                style: mediumTextStyle.copyWith(fontSize: 18),
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: transactions.map((transaction) {
+                return RecentTransactionItem(transaction);
+              }).toList(),
+            ),
+          ],
+        ),
+      );
+    }
+
     return Scaffold(
       body: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) {
-          if (state is AuthSuccess) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _header(),
-                _wallet(state.user),
-                SizedBox(
-                  height: 90,
-                ),
-              ],
+        builder: (context, userState) {
+          if (userState is AuthSuccess) {
+            return BlocBuilder<TransactionCubit, TransactionState>(
+              builder: (context, transactionState) {
+                if (transactionState is TransactionSuccess) {
+                  return SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _header(),
+                        _wallet(userState.user),
+                        (transactionState.transactions.isNotEmpty)
+                            ? _recentTransactions(transactionState.transactions)
+                            : SizedBox(),
+                        SizedBox(height: 90),
+                      ],
+                    ),
+                  );
+                } else if (transactionState is TransactionFailed) {
+                  return Text(transactionState.error);
+                } else {
+                  return SpinKitWanderingCubes(
+                    size: 50,
+                    color: blackColor1,
+                    duration: Duration(seconds: 3),
+                  );
+                }
+              },
             );
           } else {
             return SpinKitWanderingCubes(

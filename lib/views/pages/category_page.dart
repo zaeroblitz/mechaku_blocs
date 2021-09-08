@@ -54,8 +54,7 @@ class CategoryPage extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacementNamed(
-                              context, AppRoutes.mainpage);
+                          Navigator.pop(context);
                         },
                         child: Container(
                           margin: EdgeInsets.only(right: 12),
@@ -101,7 +100,11 @@ class CategoryPage extends StatelessWidget {
             );
           } else if (state is ProductByCategory) {
             if (state.products.isEmpty) {
-              return ProductNotFound();
+              return ProductNotFound(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              );
             } else {
               return Container(
                 margin: EdgeInsets.only(

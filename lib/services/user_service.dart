@@ -22,6 +22,15 @@ class UserService {
     }
   }
 
+  Future<List<CheckUserModel>> getAllUserEmail() async {
+    QuerySnapshot snapshot = await _userReference.get();
+
+    List<CheckUserModel> usersEmail =
+        snapshot.docs.map((doc) => CheckUserModel(doc.get('email'))).toList();
+
+    return usersEmail;
+  }
+
   Future<UserModel> getUserById(String id) async {
     try {
       DocumentSnapshot snapshot = await _userReference.doc(id).get();

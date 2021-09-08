@@ -3,8 +3,13 @@ part of 'widgets.dart';
 class CustomHeader extends StatelessWidget {
   final ImageProvider headerBanner;
   final String headerTitle;
+  final Function() onTap;
 
-  CustomHeader({required this.headerBanner, required this.headerTitle});
+  CustomHeader({
+    required this.headerBanner,
+    required this.headerTitle,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +54,7 @@ class CustomHeader extends StatelessWidget {
               child: Row(
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      context.read<PageCubit>().setPage(0);
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, AppRoutes.mainpage, (route) => false);
-                    },
+                    onTap: onTap,
                     child: Container(
                       margin: EdgeInsets.only(right: 12),
                       padding: EdgeInsets.all(2),

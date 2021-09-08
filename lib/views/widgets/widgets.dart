@@ -24,3 +24,4 @@ part 'custom_text_field.dart';
 part 'product_not_found.dart';
 part 'custom_alert_dialog.dart';
 part 'amount_template_item.dart';
+part 'recent_transaction_item.dart';

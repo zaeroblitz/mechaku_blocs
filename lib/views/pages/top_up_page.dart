@@ -14,78 +14,12 @@ class _TopUpPageState extends State<TopUpPage> {
   @override
   Widget build(BuildContext context) {
     Widget _header() {
-      return Container(
-        width: MediaQuery.of(context).size.width - 20,
-        height: 90,
-        margin: EdgeInsets.symmetric(
-          vertical: 30,
-          horizontal: 10,
-        ),
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: AssetImage('assets/transformers.png'),
-          ),
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Stack(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width - 20,
-              height: 90,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    blackColor1.withOpacity(0.95),
-                    blackColor1.withOpacity(0.25),
-                  ],
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 16,
-                ),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(right: 12),
-                        padding: EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                          color: whiteColor2,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.chevron_left,
-                          size: 24,
-                          color: blackColor2,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      'Top Up',
-                      style: whiteTextStyle1.copyWith(
-                        fontSize: 16,
-                        fontWeight: semiBold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
+      return CustomHeader(
+          headerBanner: AssetImage('assets/transformers.png'),
+          headerTitle: 'Top Up',
+          onTap: () {
+            Navigator.pop(context);
+          });
     }
 
     Widget _customAmout() {
@@ -131,8 +65,11 @@ class _TopUpPageState extends State<TopUpPage> {
                           autofocus: false,
                           controller: _amountController,
                           style: regularTextStyle,
-                          validator: PatternValidator('^[1-9][0-9]',
-                              errorText: 'Must be number & greater than 0'),
+                          validator: MultiValidator([
+                            PatternValidator('^[1-9][0-9]',
+                                errorText: 'Must be number & greater than 0'),
+                            RequiredValidator(errorText: 'Must be fill'),
+                          ]),
                           cursorColor: orangeColor,
                           decoration: InputDecoration.collapsed(
                             hintText: 'Fill your custom amount',
@@ -142,6 +79,8 @@ class _TopUpPageState extends State<TopUpPage> {
                             if (value != '') {
                               setState(() {
                                 isEmpty = false;
+                                selectedAmount =
+                                    int.parse(_amountController.text);
                               });
                             } else if (value == '') {
                               setState(() {
@@ -159,7 +98,8 @@ class _TopUpPageState extends State<TopUpPage> {
                               onTap: () {
                                 setState(() {
                                   isEmpty = true;
-                                  _amountController.text = '';
+                                  _amountController.text = '0';
+                                  selectedAmount = 0;
                                 });
                               },
                               child: Icon(
@@ -240,7 +180,7 @@ class _TopUpPageState extends State<TopUpPage> {
     }
 
     Widget _button(UserModel user) {
-      return (selectedAmount > 0)
+      return (selectedAmount > 0 || !isEmpty)
           ? Center(
               child: CustomButton(
                 width: MediaQuery.of(context).size.width - 80,
@@ -251,7 +191,7 @@ class _TopUpPageState extends State<TopUpPage> {
                     _key.currentState!.save();
 
                     TransactionModel transactionModel = TransactionModel(
-                      amount: selectedAmount,
+                      amount: int.parse(_amountController.text),
                       picture: '',
                       date:
                           '${DateTime.now().dayName}, ${DateTime.now().day} ${DateTime.now().monthName} ${DateTime.now().year}',
@@ -260,9 +200,8 @@ class _TopUpPageState extends State<TopUpPage> {
                       userID: user.id,
                     );
 
-                    context
-                        .read<AuthCubit>()
-                        .updateUserBalance(user, selectedAmount);
+                    context.read<AuthCubit>().updateUserBalance(
+                        user, int.parse(_amountController.text));
 
                     context
                         .read<TransactionCubit>()

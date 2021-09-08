@@ -10,6 +10,7 @@ class SearchPage extends StatelessWidget {
       return CustomHeader(
         headerBanner: AssetImage('assets/search_page_banner.png'),
         headerTitle: 'Find Your Mechas',
+        onTap: () => Navigator.pop(context),
       );
     }
 
@@ -62,7 +63,7 @@ class SearchPage extends StatelessWidget {
 
     return Scaffold(
       body: (products.isEmpty)
-          ? ProductNotFound()
+          ? ProductNotFound(onPressed: () => Navigator.pop(context))
           : BlocBuilder<AuthCubit, AuthState>(
               builder: (context, state) {
                 if (state is AuthSuccess) {

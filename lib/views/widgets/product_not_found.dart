@@ -1,6 +1,9 @@
 part of 'widgets.dart';
 
 class ProductNotFound extends StatelessWidget {
+  Function() onPressed;
+  ProductNotFound({required this.onPressed});
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -21,11 +24,7 @@ class ProductNotFound extends StatelessWidget {
           ),
           SizedBox(height: 20),
           CustomButton(
-            onPressed: () {
-              context.read<PageCubit>().setPage(0);
-              Navigator.pushNamedAndRemoveUntil(
-                  context, AppRoutes.mainpage, (route) => false);
-            },
+            onPressed: onPressed,
             text: 'Get Back',
             width: MediaQuery.of(context).size.width - 120,
           ),

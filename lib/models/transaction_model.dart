@@ -23,7 +23,7 @@ class TransactionModel extends Equatable {
     return TransactionModel(
       amount: json['amount'],
       picture: json['picture'],
-      date: json['data'],
+      date: json['date'],
       time: DateTime.fromMillisecondsSinceEpoch(json['time']),
       title: json['title'],
       userID: json['userID'],

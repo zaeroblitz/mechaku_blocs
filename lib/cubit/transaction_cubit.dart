@@ -23,6 +23,9 @@ class TransactionCubit extends Cubit<TransactionState> {
       List<TransactionModel> transactions =
           await TransactionService().getTransaction(userID);
 
+      transactions.sort((transaction1, transaction2) =>
+          transaction2.time.compareTo(transaction1.time));
+
       emit(TransactionSuccess(transactions));
     } catch (e) {
       emit(TransactionFailed(e.toString()));
