@@ -113,6 +113,22 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  void addToCart(UserModel user, CheckoutModel checkout) async {
+    try {
+      await UserService().addToCart(user, checkout);
+    } catch (e) {
+      emit(AuthFailed(e.toString()));
+    }
+  }
+
+  void removeFromCart(UserModel user, CheckoutModel checkout) async {
+    try {
+      await UserService().removeFromCart(user, checkout);
+    } catch (e) {
+      emit(AuthFailed(e.toString()));
+    }
+  }
+
   void signOut() async {
     try {
       emit(AuthLoading());

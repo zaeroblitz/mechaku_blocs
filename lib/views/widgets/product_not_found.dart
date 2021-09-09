@@ -1,7 +1,7 @@
 part of 'widgets.dart';
 
 class ProductNotFound extends StatelessWidget {
-  Function() onPressed;
+  final Function() onPressed;
   ProductNotFound({required this.onPressed});
 
   @override

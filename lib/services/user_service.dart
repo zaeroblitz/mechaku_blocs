@@ -58,4 +58,25 @@ class UserService {
       throw e;
     }
   }
+
+  Future<UserModel> addToCart(UserModel user, CheckoutModel checkout) async {
+    try {
+      await _userReference.doc(user.id).update({
+        'checkout': FieldValue.arrayUnion([checkout.toJson()]),
+      });
+      return user;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<void> removeFromCart(UserModel user, CheckoutModel checkout) async {
+    try {
+      _userReference.doc(user.id).update({
+        'checkout': FieldValue.arrayRemove([checkout.product.id])
+      });
+    } catch (e) {
+      throw e;
+    }
+  }
 }

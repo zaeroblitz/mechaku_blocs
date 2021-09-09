@@ -265,40 +265,51 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         );
       }
 
-      Widget _buttons() {
-        return Container(
-          margin: EdgeInsets.only(top: 20),
-          child: Row(
-            children: [
-              // Chat Button
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  margin: EdgeInsets.only(right: 24),
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: whiteColor,
-                    border: Border.all(
-                      color: Color(0xFFC4C4C4),
+      Widget _buttons(UserModel user) {
+        return Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            margin: EdgeInsets.only(top: 20),
+            child: Row(
+              children: [
+                // Chat Button
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    margin: EdgeInsets.only(right: 24),
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: whiteColor,
+                      border: Border.all(
+                        color: Color(0xFFC4C4C4),
+                      ),
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Icon(
-                    CupertinoIcons.chat_bubble_text_fill,
-                    color: blackColor2,
-                    size: 24,
+                    child: Icon(
+                      CupertinoIcons.chat_bubble_text_fill,
+                      color: blackColor2,
+                      size: 24,
+                    ),
                   ),
                 ),
-              ),
 
-              // Add to Cart Button
-              Expanded(
-                child: CustomButton(
-                  onPressed: () {},
-                  text: 'Add to Cart',
+                // Add to Cart Button
+                Expanded(
+                  child: CustomButton(
+                    onPressed: () {
+                      CheckoutModel checkout = CheckoutModel(
+                        product: product,
+                        qty: 1,
+                        totalPrice: product.price,
+                      );
+                      context.read<AuthCubit>().addToCart(user, checkout);
+                      context.read<AuthCubit>().getCurrentUser(user.id);
+                    },
+                    text: 'Add to Cart',
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       }
@@ -317,7 +328,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             _productPrice(),
             _productStock(),
             _productDescription(),
-            _buttons(),
+            _buttons(user),
           ],
         ),
       );
