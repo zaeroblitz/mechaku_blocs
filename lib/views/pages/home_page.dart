@@ -82,12 +82,45 @@ class _HomepageState extends State<Homepage> {
             ),
 
             // Cart Icon
-            GestureDetector(
-              onTap: () {},
-              child: Icon(
-                CupertinoIcons.cart,
-                color: whiteColor,
-                size: 24,
+            Container(
+              width: 40,
+              height: 40,
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Icon(
+                        CupertinoIcons.bag,
+                        color: whiteColor2,
+                        size: 24,
+                      ),
+                    ),
+                  ),
+                  (user.checkout.isNotEmpty)
+                      ? Align(
+                          alignment: Alignment.topRight,
+                          child: Container(
+                            width: 20,
+                            height: 20,
+                            decoration: BoxDecoration(
+                              color: greenColor,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Text(
+                                '${user.checkout.length}',
+                                style: whiteTextStyle2.copyWith(
+                                  fontSize: 10,
+                                  fontWeight: semiBold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
+                ],
               ),
             ),
           ],
@@ -368,6 +401,8 @@ class _HomepageState extends State<Homepage> {
               ],
             ),
           );
+        } else if (userState is AuthFailed) {
+          return Center(child: Text(userState.error));
         } else {
           return Center(
             child: SpinKitWanderingCubes(

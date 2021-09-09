@@ -34,7 +34,9 @@ class UserService {
   Future<UserModel> getUserById(String id) async {
     try {
       DocumentSnapshot snapshot = await _userReference.doc(id).get();
-      return UserModel.fromJson(id, snapshot.data() as Map<String, dynamic>);
+      UserModel user =
+          UserModel.fromJson(id, snapshot.data() as Map<String, dynamic>);
+      return user;
     } catch (e) {
       throw e;
     }

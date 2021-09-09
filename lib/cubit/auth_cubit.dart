@@ -80,14 +80,16 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       emit(AuthLoading());
       UserModel userModel = UserModel(
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          balance: user.balance + amount,
-          profilePicture: user.profilePicture,
-          role: user.role,
-          username: user.username,
-          wishlists: user.wishlists);
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        balance: user.balance + amount,
+        profilePicture: user.profilePicture,
+        role: user.role,
+        username: user.username,
+        wishlists: user.wishlists,
+        checkout: user.checkout,
+      );
 
       await UserService().setUser(userModel);
 

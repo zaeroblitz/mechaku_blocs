@@ -59,7 +59,7 @@ class ProductModel extends Equatable {
       'gallery': gallery,
       'qty': qty,
       'price': price,
-      'priceFlaseSale': priceFlashSale,
+      'priceFlashSale': priceFlashSale,
       'isFlashSale': isFlashSale,
       'isBestSeller': isBestSeller,
     };

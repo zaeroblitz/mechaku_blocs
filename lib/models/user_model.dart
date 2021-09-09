@@ -10,6 +10,7 @@ class UserModel extends Equatable {
   final String role;
   int balance;
   final List<String> wishlists;
+  List<CheckoutModel> checkout;
 
   UserModel({
     required this.id,
@@ -20,10 +21,14 @@ class UserModel extends Equatable {
     this.role = 'USER',
     this.balance = 0,
     this.wishlists = const [],
+    this.checkout = const [],
   });
 
   factory UserModel.fromJson(String id, Map<String, dynamic> json) {
     List<String> wishlists = List.from(json['wishlists']);
+
+    List<CheckoutModel> checkout = List<CheckoutModel>.from(
+        json["checkout"].map((x) => CheckoutModel.fromJson(x)));
 
     return UserModel(
       id: id,
@@ -34,6 +39,7 @@ class UserModel extends Equatable {
       role: json['role'],
       balance: json['balance'],
       wishlists: wishlists,
+      checkout: checkout,
     );
   }
 
@@ -46,6 +52,7 @@ class UserModel extends Equatable {
       'role': role,
       'balance': balance,
       'wishlists': List.from(wishlists),
+      'checkout': List<dynamic>.from(checkout.map((e) => e.toJson())),
     };
   }
 
@@ -59,5 +66,6 @@ class UserModel extends Equatable {
         role,
         balance,
         wishlists,
+        checkout,
       ];
 }

@@ -13,6 +13,27 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     final ProductModel product =
         ModalRoute.of(context)!.settings.arguments as ProductModel;
 
+    _handleAddToCheckout(UserModel user) {
+      CheckoutModel checkout = CheckoutModel(
+        product: product,
+        qty: 1,
+        totalPrice: product.price,
+      );
+      context.read<AuthCubit>().addToCart(user, checkout);
+      context.read<AuthCubit>().getCurrentUser(user.id);
+      showDialog(
+        context: context,
+        builder: (context) {
+          return CustomAlertDialog(
+            'Successfully Added to checkout',
+            '${product.name} added to your checkout',
+            'Close',
+            () => Navigator.pop(context),
+          );
+        },
+      );
+    }
+
     Widget _indicator(int index) {
       return Container(
         margin: EdgeInsets.symmetric(horizontal: 2),
@@ -25,7 +46,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       );
     }
 
-    Widget _productGallery() {
+    Widget _productGallery(UserModel user) {
       int index = -1;
 
       return Container(
@@ -81,16 +102,20 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     // Back Icon
                     GestureDetector(
                       onTap: () => Navigator.pop(context),
-                      child: Container(
-                        padding: EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          color: whiteColor,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Icon(
-                          Icons.chevron_left_rounded,
-                          color: blackColor2,
-                          size: 20,
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Container(
+                          width: 32,
+                          height: 32,
+                          decoration: BoxDecoration(
+                            color: whiteColor,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.chevron_left_rounded,
+                            color: blackColor2,
+                            size: 20,
+                          ),
                         ),
                       ),
                     ),
@@ -98,16 +123,52 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     // Cart Icon
                     GestureDetector(
                       onTap: () => {},
-                      child: Container(
-                        padding: EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          color: whiteColor,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Icon(
-                          CupertinoIcons.cart,
-                          color: blackColor2,
-                          size: 20,
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Container(
+                          width: 32,
+                          height: 32,
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.center,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: whiteColor2,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  padding: EdgeInsets.all(8),
+                                  child: Icon(
+                                    CupertinoIcons.bag,
+                                    color: blackColor2,
+                                    size: 20,
+                                  ),
+                                ),
+                              ),
+                              (user.checkout.isNotEmpty)
+                                  ? Align(
+                                      alignment: Alignment.topRight,
+                                      child: Container(
+                                        width: 20,
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                          color: greenColor,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            '${user.checkout.length}',
+                                            style: whiteTextStyle2.copyWith(
+                                              fontSize: 10,
+                                              fontWeight: semiBold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : SizedBox(),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -297,13 +358,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 Expanded(
                   child: CustomButton(
                     onPressed: () {
-                      CheckoutModel checkout = CheckoutModel(
-                        product: product,
-                        qty: 1,
-                        totalPrice: product.price,
-                      );
-                      context.read<AuthCubit>().addToCart(user, checkout);
-                      context.read<AuthCubit>().getCurrentUser(user.id);
+                      _handleAddToCheckout(user);
                     },
                     text: 'Add to Cart',
                   ),
@@ -338,14 +393,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       body: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) {
           if (state is AuthSuccess) {
-            return SafeArea(
-              child: SingleChildScrollView(
-                child: Stack(
-                  children: [
-                    _productGallery(),
-                    _productInformation(state.user),
-                  ],
-                ),
+            return SingleChildScrollView(
+              child: Stack(
+                children: [
+                  _productGallery(state.user),
+                  _productInformation(state.user),
+                ],
               ),
             );
           } else {

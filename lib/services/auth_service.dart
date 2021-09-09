@@ -21,6 +21,7 @@ class AuthService {
         balance: 2000000,
         profilePicture: 'https://ui-avatars.com/api/?name=$name',
         wishlists: [],
+        checkout: [],
       );
 
       await UserService().setUser(user);
@@ -95,6 +96,8 @@ class AuthService {
           name: userCredential.user!.displayName as String,
           username: userCredential.user!.displayName as String,
           profilePicture: userCredential.user!.photoURL as String,
+          wishlists: [],
+          checkout: [],
         );
 
         await UserService().setUser(user);
