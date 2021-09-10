@@ -138,12 +138,15 @@ class CartItem extends StatelessWidget {
                     onTap: () {
                       if (cart.qty == 0) {
                         context.read<AuthCubit>().removeFromCart(user, cart);
+                        context.read<AuthCubit>().getCurrentUser(user.id);
+                      } else {
+                        cart.qty--;
+                        cart.totalPrice = cart.product.price * cart.qty;
+                        context
+                            .read<AuthCubit>()
+                            .updateCartQty(user, user.cart);
+                        context.read<AuthCubit>().getCurrentUser(user.id);
                       }
-
-                      cart.qty--;
-                      cart.totalPrice = cart.product.price * cart.qty;
-                      context.read<AuthCubit>().updateCartQty(user, user.cart);
-                      context.read<AuthCubit>().getCurrentUser(user.id);
                     },
                     child: Container(
                       width: 16,

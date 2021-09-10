@@ -6,3 +6,4 @@ part 'product_model.dart';
 part 'category_model.dart';
 part 'check_user_model.dart';
 part 'transaction_model.dart';
+part 'sold_product_model.dart';

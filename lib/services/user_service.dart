@@ -16,6 +16,7 @@ class UserService {
         'profilePicture': user.profilePicture == ''
             ? 'https://ui-avatars.com/api/?name=${user.name}'
             : user.profilePicture,
+        'cart': user.cart,
       });
     } catch (e) {
       throw e;

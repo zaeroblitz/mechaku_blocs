@@ -91,7 +91,7 @@ class AuthCubit extends Cubit<AuthState> {
         cart: user.cart,
       );
 
-      await UserService().setUser(userModel);
+      await UserService().update(userModel);
 
       emit(AuthSuccess(userModel));
     } catch (e) {
