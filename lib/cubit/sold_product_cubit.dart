@@ -8,11 +8,11 @@ part 'sold_product_state.dart';
 class SoldProductCubit extends Cubit<SoldProductState> {
   SoldProductCubit() : super(SoldProductInitial());
 
-  void addSoldProduct(SoldProductModel soldProduct) async {
+  void addSoldProduct(List<SoldProductModel> soldProduct) async {
     try {
       emit(SoldProductLoading());
 
-      await SoldProductService().addSoldProduct(soldProduct);
+      soldProduct.map((e) => SoldProductService().addSoldProduct(e)).toList();
     } catch (e) {
       throw e;
     }

@@ -15,6 +15,7 @@ part 'cart_item.dart';
 part 'product_tile.dart';
 part 'shimmer_item.dart';
 part 'category_item.dart';
+part 'checkout_item.dart';
 part 'custom_button.dart';
 part 'custom_header.dart';
 part 'wishlist_item.dart';

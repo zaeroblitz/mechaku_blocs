@@ -64,14 +64,18 @@ class CartPage extends StatelessWidget {
           : SizedBox();
     }
 
-    Widget _button() {
+    Widget _button(List<CartModel> cart) {
       return Container(
         margin: EdgeInsets.symmetric(
           vertical: 10,
           horizontal: 20,
         ),
         child: CustomButton(
-          onPressed: () {},
+          onPressed: () => Navigator.pushNamed(
+            context,
+            AppRoutes.checkout_page,
+            arguments: cart,
+          ),
           text: 'Add to Checkout',
           color: orangeColor2,
         ),
@@ -92,7 +96,7 @@ class CartPage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _totalPrice(cart),
-            _button(),
+            _button(cart),
           ],
         ),
       );
