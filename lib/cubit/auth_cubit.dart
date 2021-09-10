@@ -88,7 +88,7 @@ class AuthCubit extends Cubit<AuthState> {
         role: user.role,
         username: user.username,
         wishlists: user.wishlists,
-        checkout: user.checkout,
+        cart: user.cart,
       );
 
       await UserService().setUser(userModel);
@@ -115,7 +115,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  void addToCart(UserModel user, CheckoutModel checkout) async {
+  void addToCart(UserModel user, CartModel checkout) async {
     try {
       await UserService().addToCart(user, checkout);
     } catch (e) {
@@ -123,9 +123,17 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  void removeFromCart(UserModel user, CheckoutModel checkout) async {
+  void removeFromCart(UserModel user, CartModel checkout) async {
     try {
       await UserService().removeFromCart(user, checkout);
+    } catch (e) {
+      emit(AuthFailed(e.toString()));
+    }
+  }
+
+  void updateCartQty(UserModel user, List<CartModel> checkout) async {
+    try {
+      await UserService().updateCartQty(user, checkout);
     } catch (e) {
       emit(AuthFailed(e.toString()));
     }

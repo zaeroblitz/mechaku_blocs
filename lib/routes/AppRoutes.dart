@@ -1,6 +1,7 @@
 abstract class AppRoutes {
   static const String homepage = '/homepage';
   static const String mainpage = '/mainpage';
+  static const String cart_page = '/cart-page';
   static const String search_page = '/search-page';
   static const String splash_page = '/splash-page';
   static const String top_up_page = '/top-up-page';

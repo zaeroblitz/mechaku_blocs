@@ -61,10 +61,10 @@ class UserService {
     }
   }
 
-  Future<UserModel> addToCart(UserModel user, CheckoutModel checkout) async {
+  Future<UserModel> addToCart(UserModel user, CartModel checkout) async {
     try {
       await _userReference.doc(user.id).update({
-        'checkout': FieldValue.arrayUnion([checkout.toJson()]),
+        'cart': FieldValue.arrayUnion([checkout.toJson()]),
       });
       return user;
     } catch (e) {
@@ -72,11 +72,24 @@ class UserService {
     }
   }
 
-  Future<void> removeFromCart(UserModel user, CheckoutModel checkout) async {
+  Future<void> removeFromCart(UserModel user, CartModel checkout) async {
     try {
       _userReference.doc(user.id).update({
-        'checkout': FieldValue.arrayRemove([checkout.product.id])
+        'cart': FieldValue.arrayRemove([checkout.toJson()])
       });
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<UserModel> updateCartQty(
+      UserModel user, List<CartModel> checkout) async {
+    try {
+      await _userReference.doc(user.id).update({
+        'cart': List.from(checkout.map((e) => e.toJson())),
+      });
+
+      return user;
     } catch (e) {
       throw e;
     }

@@ -11,6 +11,7 @@ import '../../cubit/auth_cubit.dart';
 import '../../routes/AppRoutes.dart';
 import '../../cubit/product_cubit.dart';
 
+part 'cart_item.dart';
 part 'product_tile.dart';
 part 'shimmer_item.dart';
 part 'category_item.dart';

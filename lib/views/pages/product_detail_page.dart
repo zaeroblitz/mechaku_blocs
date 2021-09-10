@@ -14,7 +14,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         ModalRoute.of(context)!.settings.arguments as ProductModel;
 
     _handleAddToCheckout(UserModel user) {
-      CheckoutModel checkout = CheckoutModel(
+      CartModel checkout = CartModel(
         product: product,
         qty: 1,
         totalPrice: product.price,
@@ -122,7 +122,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
                     // Cart Icon
                     GestureDetector(
-                      onTap: () => {},
+                      onTap: () => Navigator.pushNamed(
+                        context,
+                        AppRoutes.cart_page,
+                      ),
                       child: Align(
                         alignment: Alignment.topRight,
                         child: Container(
@@ -145,7 +148,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                   ),
                                 ),
                               ),
-                              (user.checkout.isNotEmpty)
+                              (user.cart.isNotEmpty)
                                   ? Align(
                                       alignment: Alignment.topRight,
                                       child: Container(
@@ -157,7 +160,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                         ),
                                         child: Center(
                                           child: Text(
-                                            '${user.checkout.length}',
+                                            '${user.cart.length}',
                                             style: whiteTextStyle2.copyWith(
                                               fontSize: 10,
                                               fontWeight: semiBold,

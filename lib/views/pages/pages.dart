@@ -27,6 +27,7 @@ import '../../extension/date_time_extension.dart';
 import '../../cubit/product_best_seller_cubit.dart';
 import '../../cubit/product_new_arrival_cubit.dart';
 
+part 'cart_page.dart';
 part 'main_page.dart';
 part 'home_page.dart';
 part 'chat_page.dart';

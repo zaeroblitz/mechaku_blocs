@@ -1,17 +1,18 @@
 part of 'models.dart';
 
-class CheckoutModel extends Equatable {
+// ignore: must_be_immutable
+class CartModel extends Equatable {
   final ProductModel product;
-  final int qty;
-  final int totalPrice;
+  int qty;
+  int totalPrice;
 
-  CheckoutModel({
+  CartModel({
     required this.product,
     required this.qty,
     required this.totalPrice,
   });
 
-  factory CheckoutModel.fromJson(Map<String, dynamic> json) => CheckoutModel(
+  factory CartModel.fromJson(Map<String, dynamic> json) => CartModel(
         product: ProductModel.fromJson(json['product']),
         qty: json['qty'],
         totalPrice: json['totalPrice'],

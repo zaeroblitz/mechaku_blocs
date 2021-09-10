@@ -90,7 +90,8 @@ class _HomepageState extends State<Homepage> {
                   Align(
                     alignment: Alignment.center,
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () =>
+                          Navigator.pushNamed(context, AppRoutes.cart_page),
                       child: Icon(
                         CupertinoIcons.bag,
                         color: whiteColor2,
@@ -98,7 +99,7 @@ class _HomepageState extends State<Homepage> {
                       ),
                     ),
                   ),
-                  (user.checkout.isNotEmpty)
+                  (user.cart.isNotEmpty)
                       ? Align(
                           alignment: Alignment.topRight,
                           child: Container(
@@ -110,7 +111,7 @@ class _HomepageState extends State<Homepage> {
                             ),
                             child: Center(
                               child: Text(
-                                '${user.checkout.length}',
+                                '${user.cart.length}',
                                 style: whiteTextStyle2.copyWith(
                                   fontSize: 10,
                                   fontWeight: semiBold,
