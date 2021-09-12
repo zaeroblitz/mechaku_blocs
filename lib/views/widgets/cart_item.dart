@@ -137,7 +137,9 @@ class CartItem extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       if (cart.qty == 1) {
-                        context.read<AuthCubit>().removeFromCart(user, cart);
+                        // context.read<AuthCubit>().removeFromCart(user, cart);
+                        user.cart.removeWhere((element) => element == cart);
+                        context.read<AuthCubit>().updateuser(user);
                         context.read<AuthCubit>().getCurrentUser(user.id);
                       } else {
                         cart.qty--;
@@ -172,7 +174,9 @@ class CartItem extends StatelessWidget {
           // Remove Icon
           GestureDetector(
             onTap: () {
-              context.read<AuthCubit>().removeFromCart(user, cart);
+              // context.read<AuthCubit>().removeFromCart(user, cart);
+              user.cart.removeWhere((element) => element == cart);
+              context.read<AuthCubit>().updateuser(user);
               context.read<AuthCubit>().getCurrentUser(user.id);
             },
             child: Container(

@@ -75,7 +75,7 @@ class UserService {
 
   Future<void> removeFromCart(UserModel user, CartModel checkout) async {
     try {
-      _userReference.doc(user.id).update({
+      await _userReference.doc(user.id).update({
         'cart': FieldValue.arrayRemove([checkout.toJson()])
       });
     } catch (e) {
