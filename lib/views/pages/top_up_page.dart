@@ -198,6 +198,7 @@ class _TopUpPageState extends State<TopUpPage> {
                       time: DateTime.now(),
                       title: 'Top Up',
                       userID: user.id,
+                      transactionID: randomAlphaNumeric(20),
                     );
 
                     context.read<AuthCubit>().updateUserBalance(

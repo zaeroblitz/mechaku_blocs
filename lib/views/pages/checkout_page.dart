@@ -276,28 +276,46 @@ class CheckoutPage extends StatelessWidget {
           ),
           child: CustomButton(
             onPressed: () async {
-              if (user.balance >= totalPrice) {
-                TransactionModel transaction = TransactionModel(
-                  date:
-                      '${DateTime.now().dayName}, ${DateTime.now().day} ${DateTime.now().monthName} ${DateTime.now().year}',
-                  time: DateTime.now(),
-                  title: 'Buy Product',
-                  userID: user.id,
-                  amount: totalPrice,
-                  picture: carts.first.product.gallery[0],
-                  transactionID: randomAlphaNumeric(20),
-                );
+              // Create Transaction
+              TransactionModel transaction = TransactionModel(
+                date:
+                    '${DateTime.now().dayName}, ${DateTime.now().day} ${DateTime.now().monthName} ${DateTime.now().year}',
+                time: DateTime.now(),
+                title: 'Buy Product',
+                userID: user.id,
+                amount: totalPrice,
+                picture: carts.first.product.gallery[0],
+                transactionID: randomAlphaNumeric(20),
+              );
+              context.read<TransactionCubit>().setTransaction(transaction);
 
-                context.read<TransactionCubit>().setTransaction(transaction);
-                context.read<SoldProductCubit>().addSoldProduct(soldProducts);
+              // Create Sold Product
+              soldProducts = carts.map((e) {
+                return SoldProductModel(
+                    product: e.product,
+                    userID: user.id,
+                    transactionID: transaction.transactionID,
+                    qty: totalQty,
+                    subTotal: totalPrice,
+                    shipmentPrice: 0,
+                    totalPrice: totalPrice);
+              }).toList();
+              context.read<SoldProductCubit>().addSoldProduct(soldProducts);
 
-                user.cart.clear();
-                user.balance = user.balance - totalPrice;
-                context.read<AuthCubit>().updateuser(user);
+              // Update Product
+              carts.map((e) {
+                e.product.qty = e.product.qty - e.qty;
+                context.read<ProductCubit>().updateProduct(e.product);
+              }).toList();
 
-                Navigator.pushNamedAndRemoveUntil(
-                    context, AppRoutes.success_checkout_page, (route) => false);
-              }
+              // Update User
+              user.cart.clear();
+              user.balance = user.balance - totalPrice;
+              context.read<AuthCubit>().updateuser(user);
+
+              // Navigate to Success Checkout Page
+              Navigator.pushNamedAndRemoveUntil(
+                  context, AppRoutes.success_checkout_page, (route) => false);
             },
             text: 'Checkout Now',
             color: orangeColor2,

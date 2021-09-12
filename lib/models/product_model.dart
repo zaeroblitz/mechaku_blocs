@@ -1,5 +1,6 @@
 part of 'models.dart';
 
+// ignore: must_be_immutable
 class ProductModel extends Equatable {
   final String id;
   final String name;
@@ -8,7 +9,7 @@ class ProductModel extends Equatable {
   final String category;
   final String description;
   final List<String> gallery;
-  final int qty;
+  int qty;
   final int price;
   final int priceFlashSale;
   final bool isFlashSale;
@@ -55,6 +56,7 @@ class ProductModel extends Equatable {
       'size': size,
       'grade': grade,
       'category': category,
+      'createdAt': Timestamp.fromDate(DateTime.now()),
       'description': description,
       'gallery': gallery,
       'qty': qty,

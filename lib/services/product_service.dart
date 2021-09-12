@@ -102,4 +102,13 @@ class ProductService {
       throw e;
     }
   }
+
+  // Update Product
+  Future<void> updateProduct(ProductModel product) async {
+    try {
+      await _productRef.doc(product.id).update(product.toJson());
+    } catch (e) {
+      throw e;
+    }
+  }
 }

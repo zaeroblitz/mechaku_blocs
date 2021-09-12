@@ -61,4 +61,14 @@ class ProductCubit extends Cubit<ProductState> {
       emit(ProductFailed(e.toString()));
     }
   }
+
+  // Update Product
+  void updateProduct(ProductModel product) async {
+    try {
+      emit(ProductLoading());
+      await ProductService().updateProduct(product);
+    } catch (e) {
+      emit(ProductFailed(e.toString()));
+    }
+  }
 }
