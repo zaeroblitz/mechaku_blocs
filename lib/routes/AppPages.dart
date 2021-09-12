@@ -16,5 +16,6 @@ class AppPages {
     AppRoutes.wishlists_page: (context) => WishlistPage(),
     AppRoutes.success_top_up_page: (context) => SuccessTopUpPage(),
     AppRoutes.detail_product_page: (context) => ProductDetailPage(),
+    AppRoutes.success_checkout_page: (context) => SucceeCheckoutPage(),
   };
 }

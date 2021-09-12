@@ -12,4 +12,5 @@ abstract class AppRoutes {
   static const String wishlists_page = '/wishlists-page';
   static const String success_top_up_page = '/success-top-up-page';
   static const String detail_product_page = '/detail-product-page';
+  static const String success_checkout_page = '/success-checkout-page';
 }

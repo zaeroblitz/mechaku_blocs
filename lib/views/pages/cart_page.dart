@@ -82,7 +82,22 @@ class CartPage extends StatelessWidget {
       );
     }
 
-    Widget _bottomNav(List<CartModel> cart) {
+    Widget _needTopUp() {
+      return Container(
+        margin: EdgeInsets.symmetric(
+          vertical: 10,
+          horizontal: 20,
+        ),
+        child: Text(
+          'You need to top up your wallet first',
+          style: pinkTextStyle,
+        ),
+      );
+    }
+
+    Widget _bottomNav(List<CartModel> cart, UserModel user) {
+      int totalPrice = 0;
+      cart.map((e) => totalPrice += e.totalPrice).toList();
       return Container(
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
@@ -95,8 +110,9 @@ class CartPage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            (user.balance >= totalPrice) ? SizedBox() : _needTopUp(),
             _totalPrice(cart),
-            _button(cart),
+            (user.balance >= totalPrice) ? _button(cart) : SizedBox(),
           ],
         ),
       );
@@ -116,7 +132,9 @@ class CartPage extends StatelessWidget {
                 ],
               ),
             ),
-            bottomNavigationBar: _bottomNav(state.user.cart),
+            bottomNavigationBar: (state.user.cart.isEmpty)
+                ? SizedBox()
+                : _bottomNav(state.user.cart, state.user),
           );
         } else if (state is AuthFailed) {
           return Scaffold(

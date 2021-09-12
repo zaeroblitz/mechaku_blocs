@@ -275,35 +275,29 @@ class CheckoutPage extends StatelessWidget {
             bottom: 30,
           ),
           child: CustomButton(
-            onPressed: () {
-              TransactionModel transaction = TransactionModel(
-                date:
-                    '${DateTime.now().dayName}, ${DateTime.now().day} ${DateTime.now().monthName} ${DateTime.now().year}',
-                time: DateTime.now(),
-                title: 'Buy Product',
-                userID: user.id,
-                amount: totalPrice,
-                picture: carts.first.product.gallery[0],
-              );
-
-              context.read<TransactionCubit>().setTransaction(transaction);
-              context.read<TransactionCubit>().getTransaction(user.id);
-
-              carts.map((e) {
-                soldProducts.add(
-                  SoldProductModel(
-                    product: e.product,
-                    userID: user.id,
-                    transactionID: transaction.transactionID,
-                    qty: totalQty,
-                    subTotal: totalPrice,
-                    shipmentPrice: 0,
-                    totalPrice: totalPrice,
-                  ),
+            onPressed: () async {
+              if (user.balance >= totalPrice) {
+                TransactionModel transaction = TransactionModel(
+                  date:
+                      '${DateTime.now().dayName}, ${DateTime.now().day} ${DateTime.now().monthName} ${DateTime.now().year}',
+                  time: DateTime.now(),
+                  title: 'Buy Product',
+                  userID: user.id,
+                  amount: totalPrice,
+                  picture: carts.first.product.gallery[0],
+                  transactionID: randomAlphaNumeric(20),
                 );
-              }).toList();
 
-              context.read<SoldProductCubit>().addSoldProduct(soldProducts);
+                context.read<TransactionCubit>().setTransaction(transaction);
+                context.read<SoldProductCubit>().addSoldProduct(soldProducts);
+
+                user.cart.clear();
+                user.balance = user.balance - totalPrice;
+                context.read<AuthCubit>().updateuser(user);
+
+                Navigator.pushNamedAndRemoveUntil(
+                    context, AppRoutes.success_checkout_page, (route) => false);
+              }
             },
             text: 'Checkout Now',
             color: orangeColor2,

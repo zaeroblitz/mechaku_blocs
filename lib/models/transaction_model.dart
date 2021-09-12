@@ -31,7 +31,7 @@ class TransactionModel extends Equatable {
     );
   }
 
-  Map<String, dynamic> toJson(String id) {
+  Map<String, dynamic> toJson() {
     return {
       'amount': amount,
       'picture': picture,
@@ -39,7 +39,7 @@ class TransactionModel extends Equatable {
       'time': time.millisecondsSinceEpoch,
       'title': title,
       'userID': userID,
-      'transactionID': id,
+      'transactionID': transactionID,
     };
   }
 

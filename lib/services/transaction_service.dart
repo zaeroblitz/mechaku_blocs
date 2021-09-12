@@ -6,8 +6,7 @@ class TransactionService {
 
   Future<void> setTransaction(TransactionModel transactionModel) async {
     try {
-      _transactionRef.add(transactionModel.toJson('id')).then((value) =>
-          _transactionRef.doc(value.id).set(transactionModel.toJson(value.id)));
+      _transactionRef.add(transactionModel.toJson());
     } catch (e) {
       throw e;
     }

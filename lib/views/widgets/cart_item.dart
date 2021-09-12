@@ -136,7 +136,7 @@ class CartItem extends StatelessWidget {
                   // Decrement
                   GestureDetector(
                     onTap: () {
-                      if (cart.qty == 0) {
+                      if (cart.qty == 1) {
                         context.read<AuthCubit>().removeFromCart(user, cart);
                         context.read<AuthCubit>().getCurrentUser(user.id);
                       } else {
