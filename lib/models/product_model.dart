@@ -14,6 +14,7 @@ class ProductModel extends Equatable {
   final int priceFlashSale;
   final bool isFlashSale;
   final bool isBestSeller;
+  final Timestamp createdAt;
 
   ProductModel({
     required this.id,
@@ -28,6 +29,7 @@ class ProductModel extends Equatable {
     required this.priceFlashSale,
     required this.isFlashSale,
     required this.isBestSeller,
+    required this.createdAt,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -46,6 +48,7 @@ class ProductModel extends Equatable {
       priceFlashSale: json['priceFlashSale'] as int,
       isFlashSale: json['isFlashSale'],
       isBestSeller: json['isBestSeller'],
+      createdAt: json['createdAt'],
     );
   }
 
@@ -56,9 +59,9 @@ class ProductModel extends Equatable {
       'size': size,
       'grade': grade,
       'category': category,
-      'createdAt': Timestamp.fromDate(DateTime.now()),
+      'createdAt': createdAt,
       'description': description,
-      'gallery': gallery,
+      'gallery': List.from(gallery),
       'qty': qty,
       'price': price,
       'priceFlashSale': priceFlashSale,

@@ -45,14 +45,14 @@ class UserModel extends Equatable {
 
   Map<String, dynamic> toJson() {
     return {
+      'balance': balance,
+      'cart': List<dynamic>.from(cart.map((e) => e.toJson())),
       'email': email,
       'name': name,
-      'username': username,
       'profilePicture': profilePicture,
+      'username': username,
       'role': role,
-      'balance': balance,
       'wishlists': List.from(wishlists),
-      'cart': List<dynamic>.from(cart.map((e) => e.toJson())),
     };
   }
 

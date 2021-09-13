@@ -289,6 +289,12 @@ class CheckoutPage extends StatelessWidget {
               );
               context.read<TransactionCubit>().setTransaction(transaction);
 
+              // Update Product
+              carts.map((e) {
+                e.product.qty = e.product.qty - e.qty;
+                context.read<ProductCubit>().updateProduct(e.product);
+              }).toList();
+
               // Create Sold Product
               soldProducts = carts.map((e) {
                 return SoldProductModel(
@@ -301,12 +307,6 @@ class CheckoutPage extends StatelessWidget {
                     totalPrice: totalPrice);
               }).toList();
               context.read<SoldProductCubit>().addSoldProduct(soldProducts);
-
-              // Update Product
-              carts.map((e) {
-                e.product.qty = e.product.qty - e.qty;
-                context.read<ProductCubit>().updateProduct(e.product);
-              }).toList();
 
               // Update User
               user.cart.clear();
