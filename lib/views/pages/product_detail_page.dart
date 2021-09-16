@@ -9,6 +9,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   int currentIndex = 0;
 
   @override
+  void initState() {
+    super.initState();
+    context.read<ProductCubit>().getProductsByLimit(5);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final ProductModel product =
         ModalRoute.of(context)!.settings.arguments as ProductModel;
@@ -93,7 +99,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               alignment: Alignment.topCenter,
               child: Container(
                 margin: EdgeInsets.symmetric(
-                  vertical: 30,
+                  vertical: 40,
                   horizontal: 20,
                 ),
                 child: Row(
@@ -234,10 +240,27 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               onTap: () {
                 if (user.wishlists.contains(product.id)) {
                   user.wishlists.remove(product.id);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      backgroundColor: pinkColor,
+                      duration: Duration(milliseconds: 1500),
+                      content: Text(
+                        'Successfully remove ${product.name} from your wishlists',
+                      ),
+                    ),
+                  );
                   context.read<AuthCubit>().removeFromWishlists(user, product);
                   context.read<AuthCubit>().getCurrentUser(user.id);
                 } else {
                   user.wishlists.add(product.id);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      backgroundColor: greenColor,
+                      duration: Duration(milliseconds: 1500),
+                      content: Text(
+                          'Successfully added ${product.name} to your wishlists'),
+                    ),
+                  );
                   context.read<AuthCubit>().addToWishlists(user, product);
                   context.read<AuthCubit>().getCurrentUser(user.id);
                 }
@@ -329,6 +352,52 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         );
       }
 
+      Widget _recommendationProducts() {
+        int index = -1;
+        return BlocBuilder<ProductCubit, ProductState>(
+          builder: (context, state) {
+            if (state is ProductByLimit) {
+              return Container(
+                margin: EdgeInsets.only(top: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(bottom: 12),
+                      child: Text(
+                        'Recommendation Products',
+                        style: mediumTextStyle,
+                      ),
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: state.products.map((product) {
+                          index++;
+                          return SuggestedProduct(
+                            product,
+                            index,
+                            state.products.length,
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            } else if (state is ProductLoading) {
+              return SpinKitWanderingCubes(
+                size: 50,
+                color: blackColor1,
+                duration: Duration(seconds: 3),
+              );
+            } else {
+              return SizedBox();
+            }
+          },
+        );
+      }
+
       Widget _buttons(UserModel user) {
         return Align(
           alignment: Alignment.bottomCenter,
@@ -386,6 +455,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             _productPrice(),
             _productStock(),
             _productDescription(),
+            _recommendationProducts(),
             _buttons(user),
           ],
         ),

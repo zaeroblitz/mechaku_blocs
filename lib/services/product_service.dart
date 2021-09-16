@@ -19,6 +19,20 @@ class ProductService {
     }
   }
 
+  // Get Random Products
+  Future<List<ProductModel>> getLimitProducts(int limit) async {
+    try {
+      QuerySnapshot snapshot = await _productRef.limit(limit).get();
+      List<ProductModel> products = snapshot.docs.map((e) {
+        return ProductModel.fromJson(e.data() as Map<String, dynamic>);
+      }).toList();
+
+      return products;
+    } catch (e) {
+      throw e;
+    }
+  }
+
   // Get Best Seller Products
   Future<List<ProductModel>> getBestSellerProducts() async {
     try {

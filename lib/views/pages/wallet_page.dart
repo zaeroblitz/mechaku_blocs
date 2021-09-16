@@ -37,7 +37,7 @@ class _WalletPageState extends State<WalletPage> {
                 image: DecorationImage(
                   fit: BoxFit.cover,
                   image: AssetImage(
-                    'assets/bumblebee.jpg',
+                    'assets/mechaku_wallet.png',
                   ),
                 ),
                 boxShadow: [
@@ -50,23 +50,6 @@ class _WalletPageState extends State<WalletPage> {
               ),
               child: Stack(
                 children: [
-                  // Background Overlay
-                  Container(
-                    width: MediaQuery.of(context).size.width - 20,
-                    height: 210,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(18),
-                      gradient: LinearGradient(
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.topRight,
-                        colors: [
-                          blackColor2.withOpacity(0.95),
-                          blackColor2.withOpacity(0.5),
-                        ],
-                      ),
-                    ),
-                  ),
-
                   // User Balance
                   Container(
                     width: MediaQuery.of(context).size.width - 20,

@@ -62,6 +62,19 @@ class ProductCubit extends Cubit<ProductState> {
     }
   }
 
+  // Get Products by Limit
+  void getProductsByLimit(int limit) async {
+    try {
+      emit(ProductLoading());
+      List<ProductModel> products =
+          await ProductService().getLimitProducts(limit);
+
+      emit(ProductByLimit(products));
+    } catch (e) {
+      emit(ProductFailed(e.toString()));
+    }
+  }
+
   // Update Product
   void updateProduct(ProductModel product) async {
     try {

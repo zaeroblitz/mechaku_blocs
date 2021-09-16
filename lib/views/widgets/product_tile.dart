@@ -91,12 +91,28 @@ class ProductTile extends StatelessWidget {
                                 .read<AuthCubit>()
                                 .removeFromWishlists(user, product);
                             context.read<AuthCubit>().getCurrentUser(user.id);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor: pinkColor,
+                                duration: Duration(milliseconds: 1500),
+                                content: Text(
+                                    'Successfully remove ${product.name} from your wishlists'),
+                              ),
+                            );
                           } else {
                             user.wishlists.add(product.id);
                             context
                                 .read<AuthCubit>()
                                 .addToWishlists(user, product);
                             context.read<AuthCubit>().getCurrentUser(user.id);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor: greenColor,
+                                duration: Duration(milliseconds: 1500),
+                                content: Text(
+                                    'Successfully add ${product.name} to your wislists'),
+                              ),
+                            );
                           }
                         },
                         child: Container(

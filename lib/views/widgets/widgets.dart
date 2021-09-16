@@ -23,6 +23,7 @@ part 'best_seller_item.dart';
 part 'new_arrival_item.dart';
 part 'custom_text_field.dart';
 part 'product_not_found.dart';
+part 'suggested_product.dart';
 part 'custom_alert_dialog.dart';
 part 'amount_template_item.dart';
 part 'recent_transaction_item.dart';

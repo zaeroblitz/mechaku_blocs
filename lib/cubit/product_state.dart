@@ -47,6 +47,15 @@ class ProductByCategory extends ProductState {
   List<Object> get props => [products];
 }
 
+class ProductByLimit extends ProductState {
+  final List<ProductModel> products;
+
+  ProductByLimit(this.products);
+
+  @override
+  List<Object> get props => [products];
+}
+
 class ProductFailed extends ProductState {
   final String error;
 
